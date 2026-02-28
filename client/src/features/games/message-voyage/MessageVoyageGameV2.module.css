@@ -1,0 +1,903 @@
+/* ── Conteneur principal ────────────────────────────────────────────────────── */
+.game {
+  max-width: 680px;
+  margin: 0 auto;
+  padding: 0;
+  overflow: hidden;
+}
+
+.globalProgress {
+  height: 4px;
+  background: var(--border);
+  border-radius: 0;
+}
+
+.globalProgressBar {
+  height: 100%;
+  background: linear-gradient(90deg, var(--primary), #2bbf86);
+  border-radius: 0 4px 4px 0;
+  transition: width 0.5s ease;
+}
+
+/* ── Écran générique ────────────────────────────────────────────────────────── */
+.screen {
+  padding: 1.5rem 1.25rem 2rem;
+  display: flex;
+  flex-direction: column;
+  gap: 1.2rem;
+  animation: fadeIn 0.3s ease;
+}
+
+@keyframes fadeIn {
+  from { opacity: 0; transform: translateY(8px); }
+  to   { opacity: 1; transform: translateY(0); }
+}
+
+/* ── En-tête de phase ───────────────────────────────────────────────────────── */
+.phaseHeader {
+  display: flex;
+  flex-direction: column;
+  gap: 0.3rem;
+}
+
+.phaseHeader h2 {
+  margin: 0;
+  font-size: 1.35rem;
+}
+
+.phaseHeader p {
+  margin: 0;
+  color: var(--muted);
+  font-size: 0.9rem;
+}
+
+.phaseTag {
+  display: inline-block;
+  padding: 0.2rem 0.65rem;
+  border-radius: 999px;
+  font-size: 0.78rem;
+  font-weight: 700;
+  background: color-mix(in srgb, var(--primary) 14%, transparent);
+  color: var(--primary);
+  border: 1px solid color-mix(in srgb, var(--primary) 30%, transparent);
+  width: fit-content;
+}
+
+.sectionTitle {
+  margin: 0;
+  font-size: 1rem;
+  font-weight: 700;
+}
+
+/* ── Accueil ────────────────────────────────────────────────────────────────── */
+.welcomeHero {
+  text-align: center;
+  padding: 1.5rem 0 0.5rem;
+}
+
+.welcomeEmoji {
+  font-size: 3.5rem;
+  display: block;
+  margin-bottom: 0.5rem;
+  animation: bounce 1.8s ease-in-out infinite;
+}
+
+@keyframes bounce {
+  0%, 100% { transform: translateY(0); }
+  50%       { transform: translateY(-8px); }
+}
+
+.welcomeTitle {
+  margin: 0 0 0.5rem;
+  font-size: 1.6rem;
+}
+
+.welcomeSubtitle {
+  margin: 0;
+  color: var(--muted);
+  line-height: 1.6;
+}
+
+.modeGrid {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 0.75rem;
+}
+
+.modeCard {
+  border: 2px solid var(--border);
+  border-radius: 14px;
+  padding: 1.1rem 0.9rem;
+  background: var(--card);
+  cursor: pointer;
+  text-align: center;
+  transition: transform 0.2s ease, box-shadow 0.2s ease, border-color 0.2s ease;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 0.4rem;
+}
+
+.modeCard:hover {
+  transform: translateY(-3px);
+  box-shadow: 0 8px 24px rgba(0,0,0,0.12);
+}
+
+.modeCard strong {
+  font-size: 1rem;
+}
+
+.modeCard p {
+  margin: 0;
+  font-size: 0.83rem;
+  color: var(--muted);
+}
+
+.modeCardSolo:hover  { border-color: var(--primary); }
+.modeCardTeam:hover  { border-color: #2bbf86; }
+
+.modeEmoji {
+  font-size: 2rem;
+}
+
+.roleList {
+  border: 1px solid var(--border);
+  border-radius: 12px;
+  padding: 0.9rem;
+  background: color-mix(in srgb, var(--bg-soft) 60%, transparent);
+}
+
+.roleListTitle {
+  margin: 0 0 0.6rem;
+  font-size: 0.88rem;
+  font-weight: 700;
+  color: var(--muted);
+  text-transform: uppercase;
+  letter-spacing: 0.04em;
+}
+
+.roleChips {
+  display: flex;
+  flex-direction: column;
+  gap: 0.45rem;
+}
+
+.roleChip {
+  display: flex;
+  align-items: center;
+  gap: 0.6rem;
+  font-size: 0.88rem;
+}
+
+.roleChip span:first-child {
+  font-size: 1.2rem;
+  width: 1.6rem;
+  text-align: center;
+}
+
+/* ── Setup équipe ───────────────────────────────────────────────────────────── */
+.setupFields {
+  display: flex;
+  flex-direction: column;
+  gap: 0.8rem;
+}
+
+.setupField {
+  display: flex;
+  flex-direction: column;
+  gap: 0.3rem;
+  font-size: 0.9rem;
+  font-weight: 600;
+}
+
+.setupField input {
+  padding: 0.55rem 0.75rem;
+  border: 1px solid var(--border);
+  border-radius: 8px;
+  background: var(--card);
+  color: var(--text);
+  font-size: 0.95rem;
+  transition: border-color 0.2s;
+}
+
+.setupField input:focus {
+  outline: none;
+  border-color: var(--primary);
+}
+
+/* ── Handoff équipe ─────────────────────────────────────────────────────────── */
+.handoffBanner {
+  background: linear-gradient(135deg, #fff3e0, #ffe0b2);
+  border: 1px solid #ffb74d;
+  border-radius: 10px;
+  padding: 0.7rem 1rem;
+  font-size: 0.95rem;
+  display: flex;
+  align-items: center;
+  gap: 0.5rem;
+}
+
+:root[data-theme="dark"] .handoffBanner {
+  background: linear-gradient(135deg, #2d1f0a, #3d2a10);
+  border-color: #7d5200;
+}
+
+/* ── Carte de rôle ──────────────────────────────────────────────────────────── */
+.roleCard {
+  display: flex;
+  align-items: center;
+  gap: 0.9rem;
+  background: color-mix(in srgb, var(--primary) 8%, var(--card));
+  border: 1px solid color-mix(in srgb, var(--primary) 25%, var(--border));
+  border-radius: 12px;
+  padding: 0.85rem 1rem;
+}
+
+.roleCardEmoji {
+  font-size: 2rem;
+}
+
+.roleCard > div strong {
+  display: block;
+  font-size: 1rem;
+}
+
+.roleCard > div p {
+  margin: 0.15rem 0 0;
+  font-size: 0.84rem;
+  color: var(--muted);
+}
+
+/* ── Sélection du message ───────────────────────────────────────────────────── */
+.messageGrid {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 0.6rem;
+}
+
+.messageOption {
+  border: 2px solid var(--border);
+  border-radius: 12px;
+  padding: 0.75rem;
+  background: var(--card);
+  cursor: pointer;
+  text-align: left;
+  display: flex;
+  flex-direction: column;
+  gap: 0.35rem;
+  transition: border-color 0.2s ease, transform 0.2s ease;
+}
+
+.messageOption:hover {
+  border-color: var(--primary);
+  transform: translateY(-2px);
+}
+
+.messageOptionSelected {
+  border-color: var(--primary);
+  background: color-mix(in srgb, var(--primary) 8%, var(--card));
+  box-shadow: 0 0 0 1px var(--primary);
+}
+
+.messageEmoji {
+  font-size: 1.6rem;
+}
+
+.messageLabel {
+  font-size: 0.88rem;
+  font-weight: 600;
+}
+
+.sensitivityBar {
+  display: flex;
+  align-items: center;
+  gap: 0.3rem;
+}
+
+.sensitivityDot {
+  width: 8px;
+  height: 8px;
+  border-radius: 50%;
+  background: var(--border);
+  transition: background 0.2s;
+}
+
+.sensitivityDotActive {
+  background: #e57373;
+}
+
+.sensitivityLabel {
+  font-size: 0.72rem;
+  color: var(--muted);
+  margin-left: 0.2rem;
+}
+
+.messageHint {
+  margin: 0.2rem 0 0;
+  font-size: 0.78rem;
+  color: var(--primary);
+  font-style: italic;
+}
+
+.sendBar {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 0.75rem;
+  background: color-mix(in srgb, var(--primary) 10%, var(--card));
+  border: 1px solid color-mix(in srgb, var(--primary) 30%, var(--border));
+  border-radius: 12px;
+  padding: 0.75rem 1rem;
+}
+
+.sendPreview {
+  display: flex;
+  align-items: center;
+  gap: 0.5rem;
+  font-size: 0.9rem;
+  flex: 1;
+  min-width: 0;
+  overflow: hidden;
+}
+
+.sendTo {
+  color: var(--muted);
+  font-size: 0.82rem;
+  white-space: nowrap;
+}
+
+/* ── Voyage ─────────────────────────────────────────────────────────────────── */
+.travelProgress {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 0;
+  padding: 0.5rem 0;
+}
+
+.travelProgressItem {
+  display: flex;
+  align-items: center;
+}
+
+.travelNode {
+  width: 40px;
+  height: 40px;
+  border-radius: 50%;
+  border: 2px solid var(--border);
+  background: var(--card);
+  display: grid;
+  place-items: center;
+  font-size: 1.1rem;
+  transition: all 0.3s ease;
+  flex-shrink: 0;
+}
+
+.travelNodeActive {
+  border-color: var(--primary);
+  background: color-mix(in srgb, var(--primary) 15%, var(--card));
+  box-shadow: 0 0 0 4px color-mix(in srgb, var(--primary) 20%, transparent);
+  animation: pulse 1.5s ease-in-out infinite;
+}
+
+@keyframes pulse {
+  0%, 100% { box-shadow: 0 0 0 4px color-mix(in srgb, var(--primary) 20%, transparent); }
+  50%       { box-shadow: 0 0 0 8px color-mix(in srgb, var(--primary) 8%, transparent); }
+}
+
+.travelNodeDone {
+  border-color: #2bbf86;
+  background: color-mix(in srgb, #2bbf86 15%, var(--card));
+  color: #2bbf86;
+  font-size: 0.9rem;
+  font-weight: 700;
+}
+
+.travelConnector {
+  width: 28px;
+  height: 2px;
+  background: var(--border);
+  transition: background 0.4s ease;
+}
+
+.travelConnectorDone {
+  background: #2bbf86;
+}
+
+.eventCard {
+  background: var(--event-bg, var(--card));
+  border: 1px solid var(--border);
+  border-radius: 14px;
+  padding: 1.2rem;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 0.7rem;
+  text-align: center;
+  animation: fadeIn 0.35s ease;
+}
+
+:root[data-theme="dark"] .eventCard {
+  background: var(--event-bg-dark, var(--card));
+}
+
+.eventCardEmoji {
+  font-size: 2.8rem;
+}
+
+.eventCardDesc {
+  margin: 0;
+  font-size: 0.92rem;
+  line-height: 1.55;
+  color: var(--muted);
+}
+
+.copyBadge {
+  display: inline-block;
+  padding: 0.3rem 0.85rem;
+  border-radius: 999px;
+  font-weight: 700;
+  font-size: 0.85rem;
+  color: #fff;
+  background: var(--badge-color, #1565c0);
+  animation: popIn 0.35s cubic-bezier(0.34, 1.56, 0.64, 1);
+}
+
+@keyframes popIn {
+  from { transform: scale(0.5); opacity: 0; }
+  to   { transform: scale(1);   opacity: 1; }
+}
+
+.copyCounter {
+  display: flex;
+  align-items: baseline;
+  justify-content: center;
+  gap: 0.5rem;
+}
+
+.copyCounterNumber {
+  font-size: 2.2rem;
+  font-weight: 800;
+  color: var(--primary);
+  line-height: 1;
+  transition: all 0.3s ease;
+}
+
+.copyCounterLabel {
+  font-size: 0.9rem;
+  color: var(--muted);
+}
+
+.messagePill {
+  display: inline-block;
+  align-self: center;
+  padding: 0.4rem 1rem;
+  border-radius: 999px;
+  background: color-mix(in srgb, var(--bg-soft) 80%, transparent);
+  border: 1px solid var(--border);
+  font-size: 0.88rem;
+  color: var(--muted);
+}
+
+/* ── Décision contact ───────────────────────────────────────────────────────── */
+.receivedMessage {
+  background: var(--card);
+  border: 1px solid var(--border);
+  border-radius: 12px;
+  padding: 0.9rem 1rem;
+}
+
+.receivedFrom {
+  margin: 0 0 0.5rem;
+  font-size: 0.82rem;
+  color: var(--muted);
+}
+
+.receivedContent {
+  display: flex;
+  align-items: center;
+  gap: 0.5rem;
+  font-size: 1rem;
+  font-weight: 600;
+}
+
+.decisionGrid {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 0.75rem;
+}
+
+.decisionCard {
+  border: 2px solid var(--border);
+  border-radius: 14px;
+  padding: 1rem 0.85rem;
+  background: var(--card);
+  cursor: pointer;
+  text-align: center;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 0.4rem;
+  transition: transform 0.2s ease, border-color 0.2s ease;
+  font-size: 0.88rem;
+}
+
+.decisionCard span:first-child {
+  font-size: 1.8rem;
+}
+
+.decisionCard strong {
+  display: block;
+  font-size: 0.88rem;
+}
+
+.decisionCard p {
+  margin: 0;
+  font-size: 0.78rem;
+  color: var(--muted);
+  line-height: 1.4;
+}
+
+.decisionCard:hover { transform: translateY(-3px); }
+.decisionKeep:hover    { border-color: #2bbf86; }
+.decisionForward:hover { border-color: #e57373; }
+
+/* ── Suppression ────────────────────────────────────────────────────────────── */
+.deleteZone {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 0.75rem;
+}
+
+.deleteAnimation {
+  display: grid;
+  grid-template-columns: auto 1fr;
+  gap: 1.2rem;
+  align-items: start;
+  animation: fadeIn 0.3s ease;
+}
+
+.deletePhone {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 0.4rem;
+  font-size: 2.2rem;
+}
+
+.deleteCheckmark {
+  font-size: 0.78rem;
+  color: #9e9e9e;
+  font-weight: 700;
+  white-space: nowrap;
+}
+
+.deletePersist {
+  display: flex;
+  flex-direction: column;
+  gap: 0.5rem;
+}
+
+.deletePersist p {
+  margin: 0;
+  font-size: 0.9rem;
+  font-weight: 600;
+  color: #c62828;
+}
+
+.deleteHolderList {
+  display: flex;
+  flex-direction: column;
+  gap: 0.35rem;
+}
+
+.deleteHolder {
+  display: flex;
+  align-items: center;
+  gap: 0.5rem;
+  font-size: 0.88rem;
+  padding: 0.3rem 0.6rem;
+  background: #fff3f3;
+  border: 1px solid #ffcdd2;
+  border-radius: 8px;
+}
+
+:root[data-theme="dark"] .deleteHolder {
+  background: #2a1212;
+  border-color: #6b2222;
+}
+
+/* ── Révélation ─────────────────────────────────────────────────────────────── */
+.revealGrid {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(140px, 1fr));
+  gap: 0.65rem;
+}
+
+.revealCard {
+  border: 2px solid var(--border);
+  border-radius: 12px;
+  padding: 0.85rem 0.7rem;
+  background: var(--card);
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 0.4rem;
+  text-align: center;
+  opacity: 0;
+  transform: scale(0.85) translateY(10px);
+  transition: opacity 0.4s ease, transform 0.4s ease, border-color 0.3s ease;
+}
+
+.revealCardVisible {
+  opacity: 1;
+  transform: scale(1) translateY(0);
+  border-color: var(--holder-color, var(--border));
+}
+
+.revealCardDeleted {
+  opacity: 0.5;
+  filter: grayscale(0.6);
+}
+
+.revealEmoji {
+  font-size: 1.8rem;
+}
+
+.revealCard strong {
+  font-size: 0.85rem;
+}
+
+.revealTag {
+  padding: 0.15rem 0.5rem;
+  border-radius: 999px;
+  font-size: 0.72rem;
+  font-weight: 700;
+  color: #fff;
+}
+
+.revealSummary {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 0.8rem;
+  animation: fadeIn 0.4s ease;
+}
+
+.copyCountBig {
+  text-align: center;
+  line-height: 1;
+}
+
+.copyCountBig span {
+  font-size: 3.5rem;
+  font-weight: 900;
+  color: #c62828;
+}
+
+.copyCountBig p {
+  margin: 0.2rem 0 0;
+  font-size: 0.9rem;
+  color: var(--muted);
+}
+
+.revealInsight {
+  width: 100%;
+  background: color-mix(in srgb, var(--insight-color, #c62828) 10%, var(--card));
+  border: 1px solid color-mix(in srgb, var(--insight-color, #c62828) 35%, transparent);
+  border-radius: 10px;
+  padding: 0.65rem 0.9rem;
+  font-size: 0.88rem;
+  line-height: 1.5;
+}
+
+/* ── Débriefing ─────────────────────────────────────────────────────────────── */
+.debriefOptions {
+  display: flex;
+  flex-direction: column;
+  gap: 0.55rem;
+}
+
+.debriefOption {
+  border: 2px solid var(--border);
+  border-radius: 10px;
+  padding: 0.75rem 1rem;
+  background: var(--card);
+  cursor: pointer;
+  text-align: left;
+  font-size: 0.92rem;
+  transition: border-color 0.2s ease, background 0.2s ease;
+}
+
+.debriefOption:hover {
+  border-color: var(--primary);
+}
+
+.debriefOptionSelected {
+  border-color: var(--primary);
+  background: color-mix(in srgb, var(--primary) 10%, var(--card));
+}
+
+.debriefLesson {
+  display: flex;
+  gap: 0.75rem;
+  align-items: flex-start;
+  background: #fffde7;
+  border: 1px solid #f9e03a;
+  border-radius: 12px;
+  padding: 0.9rem 1rem;
+  animation: fadeIn 0.3s ease;
+}
+
+:root[data-theme="dark"] .debriefLesson {
+  background: #25220a;
+  border-color: #6b5d00;
+}
+
+.debriefLessonEmoji {
+  font-size: 1.5rem;
+  flex-shrink: 0;
+}
+
+.debriefLesson p {
+  margin: 0;
+  font-size: 0.9rem;
+  line-height: 1.55;
+}
+
+/* ── Écran final ────────────────────────────────────────────────────────────── */
+.finishedHero {
+  text-align: center;
+  padding-top: 1rem;
+}
+
+.finishedEmoji {
+  font-size: 3rem;
+  display: block;
+  margin-bottom: 0.5rem;
+}
+
+.finishedHero h2 { margin: 0 0 0.3rem; }
+.finishedHero p  { margin: 0; color: var(--muted); }
+
+.finalStats {
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
+  gap: 0.6rem;
+}
+
+.finalStat {
+  background: var(--card);
+  border: 1px solid var(--border);
+  border-radius: 12px;
+  padding: 0.85rem 0.6rem;
+  text-align: center;
+}
+
+.finalStat span {
+  display: block;
+  font-size: 1.8rem;
+  font-weight: 800;
+  line-height: 1;
+  margin-bottom: 0.3rem;
+}
+
+.finalStat p {
+  margin: 0;
+  font-size: 0.78rem;
+  color: var(--muted);
+}
+
+.finalLesson {
+  background: color-mix(in srgb, var(--bg-soft) 70%, transparent);
+  border: 1px solid var(--border);
+  border-radius: 12px;
+  padding: 1rem 1.1rem;
+}
+
+.finalLesson h3 {
+  margin: 0 0 0.65rem;
+  font-size: 0.95rem;
+}
+
+.finalLesson ul {
+  margin: 0;
+  padding-left: 1.2rem;
+  display: flex;
+  flex-direction: column;
+  gap: 0.4rem;
+}
+
+.finalLesson li {
+  font-size: 0.88rem;
+  line-height: 1.5;
+}
+
+/* ── Boutons ────────────────────────────────────────────────────────────────── */
+.btnPrimary {
+  align-self: center;
+  padding: 0.7rem 1.8rem;
+  border-radius: 999px;
+  background: var(--primary);
+  color: #fff;
+  font-weight: 700;
+  font-size: 0.95rem;
+  border: none;
+  cursor: pointer;
+  transition: opacity 0.2s, transform 0.2s;
+}
+
+.btnPrimary:hover {
+  opacity: 0.88;
+  transform: translateY(-1px);
+}
+
+.btnSend {
+  padding: 0.55rem 1.2rem;
+  border-radius: 999px;
+  background: var(--primary);
+  color: #fff;
+  font-weight: 700;
+  font-size: 0.9rem;
+  border: none;
+  cursor: pointer;
+  white-space: nowrap;
+  flex-shrink: 0;
+  transition: opacity 0.2s, transform 0.2s;
+}
+
+.btnSend:hover {
+  opacity: 0.88;
+  transform: translateY(-1px);
+}
+
+.btnDelete {
+  padding: 0.7rem 1.5rem;
+  border-radius: 999px;
+  background: #c62828;
+  color: #fff;
+  font-weight: 700;
+  font-size: 0.95rem;
+  border: none;
+  cursor: pointer;
+  transition: opacity 0.2s, transform 0.2s;
+}
+
+.btnDelete:hover {
+  opacity: 0.88;
+  transform: translateY(-1px);
+}
+
+.btnGhost {
+  background: none;
+  border: none;
+  color: var(--muted);
+  font-size: 0.88rem;
+  cursor: pointer;
+  text-decoration: underline;
+  padding: 0;
+}
+
+/* ── Responsive ─────────────────────────────────────────────────────────────── */
+@media (max-width: 520px) {
+  .modeGrid      { grid-template-columns: 1fr; }
+  .messageGrid   { grid-template-columns: 1fr; }
+  .decisionGrid  { grid-template-columns: 1fr; }
+  .finalStats    { grid-template-columns: 1fr; }
+  .travelConnector { width: 16px; }
+  .travelNode    { width: 34px; height: 34px; font-size: 0.9rem; }
+  .deleteAnimation { grid-template-columns: 1fr; }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .welcomeEmoji,
+  .travelNodeActive,
+  .copyBadge,
+  .revealCard,
+  .debriefLesson,
+  .screen {
+    animation: none !important;
+    transition: none !important;
+  }
+}

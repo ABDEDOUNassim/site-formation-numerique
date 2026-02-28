@@ -1,0 +1,19 @@
+<svg width="240" height="360" viewBox="0 0 240 360" xmlns="http://www.w3.org/2000/svg">
+  <defs>
+    <linearGradient id="bg" x1="0" y1="0" x2="1" y2="1">
+      <stop offset="0" stop-color="#0f6aa0"/><stop offset="1" stop-color="#174f78"/>
+    </linearGradient>
+  </defs>
+  <rect width="240" height="360" rx="24" fill="url(#bg)"/>
+  <rect x="18" y="18" width="204" height="324" rx="16" fill="none" stroke="#9ad5ff" stroke-width="3"/>
+  <circle cx="60" cy="85" r="8" fill="#d3f0ff"/>
+  <circle cx="178" cy="88" r="8" fill="#d3f0ff"/>
+  <circle cx="120" cy="160" r="10" fill="#d3f0ff"/>
+  <circle cx="68" cy="246" r="8" fill="#d3f0ff"/>
+  <circle cx="172" cy="252" r="8" fill="#d3f0ff"/>
+  <path d="M60 85l60 75 58-72M120 160l-52 86m52-86l52 92" stroke="#9ad5ff" stroke-width="3" fill="none"/>
+  <rect x="88" y="138" width="64" height="44" rx="9" fill="#0d3552"/>
+  <path d="M96 147h48v26H96z" fill="#cceeff"/>
+  <path d="M96 147l24 16 24-16" fill="none" stroke="#0d3552" stroke-width="2"/>
+  <text x="120" y="320" text-anchor="middle" fill="#d9f2ff" font-family="Trebuchet MS, sans-serif" font-size="18" font-weight="700">MESSAGE QUI VOYAGE</text>
+</svg>

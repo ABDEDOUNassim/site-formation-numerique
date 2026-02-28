@@ -25,6 +25,9 @@ app.use(
     origin(origin, callback) {
       if (!origin) return callback(null, true);
       if (env.frontendUrls.includes(origin)) return callback(null, true);
+      if (env.nodeEnv === "development" && /^http:\/\/localhost:\d+$/.test(origin)) {
+        return callback(null, true);
+      }
       return callback(new Error(`CORS blocked for origin: ${origin}`));
     },
     credentials: true

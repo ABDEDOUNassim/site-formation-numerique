@@ -39,6 +39,16 @@ export async function listCardQuestions(ageBandId, limit = 10) {
     },
     limit: Number(limit),
     order: [["difficulty", "ASC"]],
-    attributes: ["id", "theme", "situationText", "optionA", "optionB", "optionC"]
+    attributes: [
+      "id",
+      "theme",
+      "situationText",
+      "optionA",
+      "optionB",
+      "optionC",
+      "correctOption",
+      "explanation",
+      "difficulty"
+    ]
   });
 }
