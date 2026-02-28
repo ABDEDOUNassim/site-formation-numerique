@@ -1,369 +1,335 @@
 import { useMemo, useState } from "react";
 import styles from "./InteractiveStoryEngine.module.css";
+import { HEROES, PLACES, SITUATIONS, getScoreComment } from "./storyData";
 
-const AGE_DEFAULT = "12-14 ans";
+/* ─────────────────────────────────────────────────────────────────────────────
+   Phases : pick-hero → pick-place → pick-situation → reading → choosing → ending
+─────────────────────────────────────────────────────────────────────────────── */
 
-// Donnees pedagogiques par tranche d'age et tonalite.
-// On garde des phrases courtes pour que le jeu reste fluide a lire.
-const STORY_PROFILES = {
-  "7-11 ans": {
-    introTone: "ludique",
-    scenarioTitle: "Mission numerique",
-    reminder: "Prendre son temps, demander de l'aide et proteger sa vie privee.",
-    middlePrompt: "Ton personnage recoit une demande bizarre. Que fais-tu ?",
-    midChoices: [
-      {
-        id: "secure",
-        label: "Je mets mon compte en prive et je parle a un adulte de confiance",
-        impact: "safe",
-        learning: "Tres bon reflexe : tu gardes le controle et tu demandes du soutien."
-      },
-      {
-        id: "share",
-        label: "Je partage vite pour faire rire le groupe",
-        impact: "risk",
-        learning: "Attention : partager trop vite peut exposer des infos privees."
-      }
-    ]
-  },
-  "12-14 ans": {
-    introTone: "realiste",
-    scenarioTitle: "Choix sous pression",
-    reminder: "Verifier avant d'agir, eviter la pression du groupe, proteger ses donnees.",
-    middlePrompt: "La situation s'accelere. Tu dois choisir une strategie.",
-    midChoices: [
-      {
-        id: "secure",
-        label: "Je bloque le compte suspect, je fais un signalement et je garde des preuves",
-        impact: "safe",
-        learning: "Bonne strategie : protection + signalement + preuves."
-      },
-      {
-        id: "share",
-        label: "Je reponds et j'envoie des infos pour calmer la situation",
-        impact: "risk",
-        learning: "Mauvaise piste : donner des infos augmente le risque de manipulation."
-      }
-    ]
-  },
-  "15-17 ans": {
-    introTone: "responsabilisant",
-    scenarioTitle: "Decision responsable",
-    reminder: "Tu es acteur de ta securite numerique et de celle de ton groupe.",
-    middlePrompt: "Tu as assez d'indices. Quel choix assume-tu ?",
-    midChoices: [
-      {
-        id: "secure",
-        label: "Je coupe l'echange, je securise mes reglages et j'alerte un adulte referent",
-        impact: "safe",
-        learning: "Decision mature : tu limites l'impact et tu mobilises le bon soutien."
-      },
-      {
-        id: "share",
-        label: "Je continue l'echange pour voir jusqu'ou ca va",
-        impact: "risk",
-        learning: "Risque eleve : curiosite + pression = perte de controle."
-      }
-    ]
-  }
-};
-
-const CHARACTERS = [
-  {
-    id: "nino",
-    name: "Nino",
-    role: "fan de jeux en ligne",
-    goodReflex: "n'affiche pas son vrai nom",
-    riskyData: "date de naissance complete"
-  },
-  {
-    id: "lina",
-    name: "Lina",
-    role: "aime creer des videos",
-    goodReflex: "demande conseil avant de publier",
-    riskyData: "adresse de son ecole"
-  },
-  {
-    id: "sam",
-    name: "Sam",
-    role: "discute souvent en groupe",
-    goodReflex: "utilise des mots de passe differents",
-    riskyData: "numero de telephone"
-  }
-];
-
-const PLACES = [
-  {
-    id: "home",
-    name: "a la maison",
-    dataPoint: "wifi familial"
-  },
-  {
-    id: "school",
-    name: "apres les cours",
-    dataPoint: "reseau public"
-  },
-  {
-    id: "club",
-    name: "au club multimedia",
-    dataPoint: "ordinateur partage"
-  }
-];
-
-const ACTIONS = [
-  {
-    id: "signup_fast",
-    label: "creer un compte en 30 secondes",
-    baseRisk: "high",
-    platformUse: "profil public cree rapidement pour recommander du contenu"
-  },
-  {
-    id: "signup_secure",
-    label: "creer un compte avec reglages prives",
-    baseRisk: "low",
-    platformUse: "donnees minimales, meilleure maitrise du profil"
-  },
-  {
-    id: "join_challenge",
-    label: "rejoindre un challenge viral",
-    baseRisk: "medium",
-    platformUse: "interactions mesurees pour pousser plus de notifications"
-  }
-];
-
-function pickAgeLabel(ageBandLabel) {
-  if (!ageBandLabel) return AGE_DEFAULT;
-  if (ageBandLabel.includes("7") || ageBandLabel.includes("11")) return "7-11 ans";
-  if (ageBandLabel.includes("12") || ageBandLabel.includes("14")) return "12-14 ans";
-  if (ageBandLabel.includes("15") || ageBandLabel.includes("17")) return "15-17 ans";
-  return AGE_DEFAULT;
+/* Carte de choix (héros / lieu / situation) */
+function PickCard({ emoji, title, tagline, selected, onClick, badge }) {
+  return (
+    <button
+      type="button"
+      className={`${styles.pickCard} ${selected ? styles.pickCardSelected : ""}`}
+      onClick={onClick}
+    >
+      <span className={styles.pickEmoji}>{emoji}</span>
+      <strong className={styles.pickTitle}>{title}</strong>
+      <span className={styles.pickTagline}>{tagline}</span>
+      {badge && <span className={styles.pickBadge}>{badge}</span>}
+    </button>
+  );
 }
 
-function ImageSlot({ filename, caption }) {
-  const [broken, setBroken] = useState(false);
+/* Barre de progression en haut */
+function ProgressBar({ phase }) {
+  const steps = ["pick-hero", "pick-place", "pick-situation", "reading", "choosing", "ending"];
+  const current = steps.indexOf(phase);
+
+  const labels = ["Héros", "Lieu", "Situation", "Histoire", "Choix", "Fin"];
 
   return (
-    <article className={styles.imageCard}>
-      <h4>{caption}</h4>
-      <div className={styles.imageFrame}>
-        {!broken && (
-          <img
-            src={`/images/stories/generated/${filename}`}
-            alt={caption}
-            onError={() => setBroken(true)}
-          />
-        )}
-        {broken && (
-          <div className={styles.placeholder}>
-            <p>Encart image</p>
-            <code>{filename}</code>
-          </div>
-        )}
-      </div>
-    </article>
+    <div className={styles.progressBar}>
+      {labels.map((label, i) => (
+        <div
+          key={label}
+          className={`${styles.progressStep} ${i <= current ? styles.progressDone : ""} ${i === current ? styles.progressActive : ""}`}
+        >
+          <div className={styles.progressDot} />
+          <span className={styles.progressLabel}>{label}</span>
+        </div>
+      ))}
+    </div>
   );
 }
 
-export function InteractiveStoryEngine({ story, ageBandLabel }) {
-  const [setup, setSetup] = useState({ characterId: "", placeId: "", actionId: "" });
-  const [phase, setPhase] = useState("setup");
-  const [midChoice, setMidChoice] = useState(null);
-
-  const ageLabel = useMemo(() => pickAgeLabel(ageBandLabel), [ageBandLabel]);
-  const profile = STORY_PROFILES[ageLabel] || STORY_PROFILES[AGE_DEFAULT];
-
-  // On relit les choix aux objets sources pour generer l'histoire dynamique.
-  const selectedCharacter = useMemo(
-    () => CHARACTERS.find((item) => item.id === setup.characterId),
-    [setup.characterId]
+/* Paragraphe de récit qui apparaît avec une animation */
+function StoryParagraph({ children, delay = 0 }) {
+  return (
+    <p className={styles.storyPara} style={{ animationDelay: `${delay}ms` }}>
+      {children}
+    </p>
   );
-  const selectedPlace = useMemo(
-    () => PLACES.find((item) => item.id === setup.placeId),
-    [setup.placeId]
-  );
-  const selectedAction = useMemo(
-    () => ACTIONS.find((item) => item.id === setup.actionId),
-    [setup.actionId]
-  );
+}
 
-  const canStart = Boolean(selectedCharacter && selectedPlace && selectedAction);
-  const riskFromSetup = selectedAction?.baseRisk || "medium";
+/* ─────────────────────────────────────────────────────────────────────────────
+   Composant principal
+─────────────────────────────────────────────────────────────────────────────── */
+export function InteractiveStoryEngine() {
+  const [phase, setPhase] = useState("pick-hero");
+  const [heroId, setHeroId] = useState(null);
+  const [placeId, setPlaceId] = useState(null);
+  const [situationId, setSituationId] = useState(null);
+  const [choice, setChoice] = useState(null); // choice object from situation.choices
 
-  const introText = useMemo(() => {
-    if (!canStart) return "";
+  const hero = useMemo(() => HEROES.find((h) => h.id === heroId), [heroId]);
+  const place = useMemo(() => PLACES.find((p) => p.id === placeId), [placeId]);
+  const situation = useMemo(() => SITUATIONS.find((s) => s.id === situationId), [situationId]);
 
-    return `${selectedCharacter.name}, ${selectedCharacter.role}, est ${selectedPlace.name}. ` +
-      `Iel veut ${selectedAction.label}. L'ambiance est ${profile.introTone}. ` +
-      `Premier reflexe utile: ${selectedCharacter.goodReflex}. ` +
-      `Le service collecte deja des signaux: ${selectedPlace.dataPoint}.`;
-  }, [canStart, selectedCharacter, selectedPlace, selectedAction, profile.introTone]);
-
-  const middleText = useMemo(() => {
-    if (!canStart) return "";
-
-    return `Le site propose des options pour accelerer l'inscription. ` +
-      `Si ${selectedCharacter.name} va trop vite, la plateforme peut recuperer ${selectedCharacter.riskyData}. ` +
-      `Utilisation possible de ces donnees: ${selectedAction.platformUse}.`;
-  }, [canStart, selectedCharacter, selectedAction]);
-
-  const finalData = useMemo(() => {
-    if (!midChoice || !canStart) return null;
-
-    const safeChoice = midChoice.impact === "safe";
-    const safeSetupBonus = riskFromSetup === "low" ? 1 : 0;
-    const score = (safeChoice ? 2 : 0) + safeSetupBonus;
-
-    if (safeChoice) {
-      return {
-        endingTitle: "Fin positive: compte securise",
-        endingText:
-          `${selectedCharacter.name} garde le controle de son compte. ` +
-          `Les infos sensibles restent limitees, et le profil est configure de facon privee.`,
-        lesson:
-          "Lecon: ralentir, verifier les reglages, puis parler a un adulte en cas de doute.",
-        score
-      };
-    }
-
+  /* Textes narratifs calculés une seule fois quand tous les éléments sont choisis */
+  const storyTexts = useMemo(() => {
+    if (!hero || !place || !situation) return null;
     return {
-      endingTitle: "Fin a risque: donnees trop exposees",
-      endingText:
-        `Le contenu circule plus loin que prevu. ${selectedCharacter.name} perd une partie du controle ` +
-        `car des donnees ont ete donnees trop vite.`,
-      lesson:
-        "Lecon: evite les decisions sous pression, coupe l'echange et active les protections.",
-      score
+      intro: situation.buildIntro(hero, place),
+      tension: situation.buildTension(hero, place),
+      crisis: situation.buildCrisis(hero),
     };
-  }, [midChoice, canStart, riskFromSetup, selectedCharacter]);
+  }, [hero, place, situation]);
 
-  const fileBase = `${story.slug}-${setup.characterId || "perso"}-${setup.placeId || "lieu"}-${setup.actionId || "action"}`;
+  /* Score final.
+     Bon choix sur réseau risqué = +1 bonus (contexte difficile, mais bon réflexe).
+     Scores possibles : 0 (mauvais), 3 (bon + réseau sûr), 4 (bon + réseau risqué). */
+  const score = useMemo(() => {
+    if (!choice || !place) return 0;
+    const contextBonus = place.risk === "high" && (choice.scoreBonus ?? 0) > 0 ? 1 : 0;
+    return (choice.scoreBonus ?? 0) + contextBonus;
+  }, [choice, place]);
 
-  function startStory() {
-    if (!canStart) return;
-    setPhase("middle");
+  const scoreComment = useMemo(() => getScoreComment(score), [score]);
+
+  /* Textes de conséquence + ending calculés après le choix */
+  const endingTexts = useMemo(() => {
+    if (!choice || !hero || !place) return null;
+    return {
+      consequence: choice.buildConsequence(hero, place),
+      ending: choice.buildEnding(hero, place),
+    };
+  }, [choice, hero, place]);
+
+  /* ── Handlers ── */
+  function selectHero(id) {
+    setHeroId(id);
+    setTimeout(() => setPhase("pick-place"), 200);
   }
 
-  function handleMidChoice(choice) {
-    setMidChoice(choice);
+  function selectPlace(id) {
+    setPlaceId(id);
+    setTimeout(() => setPhase("pick-situation"), 200);
+  }
+
+  function selectSituation(id) {
+    setSituationId(id);
+    setTimeout(() => setPhase("reading"), 200);
+  }
+
+  function handleChoice(c) {
+    setChoice(c);
     setPhase("ending");
   }
 
   function restart() {
-    setSetup({ characterId: "", placeId: "", actionId: "" });
-    setMidChoice(null);
-    setPhase("setup");
+    setPhase("pick-hero");
+    setHeroId(null);
+    setPlaceId(null);
+    setSituationId(null);
+    setChoice(null);
   }
 
+  /* ── Render ── */
   return (
     <section className={styles.wrapper}>
+      {/* En-tête */}
       <header className={styles.header}>
-        <h3>Mode interactif: {profile.scenarioTitle}</h3>
-        <p>{profile.reminder}</p>
+        <h3 className={styles.headerTitle}>🌐 Histoire interactive</h3>
+        <p className={styles.headerSub}>
+          Construis une histoire et fais les bons choix pour protéger ta vie privée.
+        </p>
       </header>
 
-      <section className={styles.imageSlots}>
-        <ImageSlot filename={`${fileBase}-scene-intro.png`} caption="Image 1: debut" />
-        <ImageSlot filename={`${fileBase}-scene-choix.png`} caption="Image 2: moment du choix" />
-        <ImageSlot filename={`${fileBase}-scene-fin.png`} caption="Image 3: fin" />
-      </section>
+      <ProgressBar phase={phase} />
 
-      {phase === "setup" && (
-        <section className={styles.block}>
-          <h4>1) Choisis ton personnage, lieu et action de depart</h4>
-          <div className={styles.choiceGrid}>
-            <div>
-              <label>Personnage</label>
-              <select
-                value={setup.characterId}
-                onChange={(event) => setSetup((prev) => ({ ...prev, characterId: event.target.value }))}
-              >
-                <option value="">Selectionner</option>
-                {CHARACTERS.map((item) => (
-                  <option value={item.id} key={item.id}>{item.name} - {item.role}</option>
-                ))}
-              </select>
-            </div>
+      {/* ───── PHASE : Choisir le héros ───── */}
+      {phase === "pick-hero" && (
+        <div className={styles.pickSection}>
+          <h4 className={styles.pickQuestion}>Qui est le personnage principal ?</h4>
+          <div className={styles.pickGrid}>
+            {HEROES.map((h) => (
+              <PickCard
+                key={h.id}
+                emoji={h.emoji}
+                title={h.name}
+                tagline={h.tagline}
+                selected={heroId === h.id}
+                onClick={() => selectHero(h.id)}
+              />
+            ))}
+          </div>
+        </div>
+      )}
 
-            <div>
-              <label>Lieu</label>
-              <select
-                value={setup.placeId}
-                onChange={(event) => setSetup((prev) => ({ ...prev, placeId: event.target.value }))}
-              >
-                <option value="">Selectionner</option>
-                {PLACES.map((item) => (
-                  <option value={item.id} key={item.id}>{item.name}</option>
-                ))}
-              </select>
-            </div>
+      {/* ───── PHASE : Choisir le lieu ───── */}
+      {phase === "pick-place" && (
+        <div className={styles.pickSection}>
+          <div className={styles.heroChosen}>
+            <span>{hero?.emoji}</span> <strong>{hero?.name}</strong> est prêt·e pour l'aventure !
+          </div>
+          <h4 className={styles.pickQuestion}>Où se déroule l'histoire ?</h4>
+          <div className={styles.pickGrid}>
+            {PLACES.map((p) => (
+              <PickCard
+                key={p.id}
+                emoji={p.emoji}
+                title={p.name}
+                tagline={p.tagline}
+                selected={placeId === p.id}
+                onClick={() => selectPlace(p.id)}
+                badge={p.risk === "high" ? "⚠️ Risque élevé" : "✅ Réseau sécurisé"}
+              />
+            ))}
+          </div>
+        </div>
+      )}
 
+      {/* ───── PHASE : Choisir la situation ───── */}
+      {phase === "pick-situation" && (
+        <div className={styles.pickSection}>
+          <div className={styles.heroChosen}>
+            <span>{hero?.emoji}</span> <strong>{hero?.name}</strong> ·{" "}
+            <span>{place?.emoji}</span> {place?.name}
+          </div>
+          <h4 className={styles.pickQuestion}>Quelle situation va affronter {hero?.name} ?</h4>
+          <div className={styles.pickGrid}>
+            {SITUATIONS.map((s) => (
+              <PickCard
+                key={s.id}
+                emoji={s.emoji}
+                title={s.title}
+                tagline={s.tagline}
+                selected={situationId === s.id}
+                onClick={() => selectSituation(s.id)}
+              />
+            ))}
+          </div>
+        </div>
+      )}
+
+      {/* ───── PHASE : Lecture de l'histoire ───── */}
+      {phase === "reading" && storyTexts && (
+        <div className={styles.storyReader}>
+          <div className={styles.storyHeader}>
+            <span className={styles.storySitEmoji}>{situation?.emoji}</span>
             <div>
-              <label>Action</label>
-              <select
-                value={setup.actionId}
-                onChange={(event) => setSetup((prev) => ({ ...prev, actionId: event.target.value }))}
-              >
-                <option value="">Selectionner</option>
-                {ACTIONS.map((item) => (
-                  <option value={item.id} key={item.id}>{item.label}</option>
-                ))}
-              </select>
+              <h4 className={styles.storyTitle}>{situation?.title}</h4>
+              <div className={styles.storyMeta}>
+                {hero?.emoji} {hero?.name} · {place?.emoji} {place?.name}
+              </div>
             </div>
           </div>
 
-          <button type="button" className={styles.mainBtn} disabled={!canStart} onClick={startStory}>
-            Demarrer l'histoire interactive
+          <div className={styles.storyBody}>
+            <StoryParagraph delay={0}>{storyTexts.intro}</StoryParagraph>
+            <div className={styles.storySeparator} />
+            <StoryParagraph delay={150}>{storyTexts.tension}</StoryParagraph>
+            <div className={styles.storySeparator} />
+            <StoryParagraph delay={300}>{storyTexts.crisis}</StoryParagraph>
+          </div>
+
+          <button
+            type="button"
+            className={styles.btnContinue}
+            onClick={() => setPhase("choosing")}
+          >
+            Le moment du choix →
           </button>
-        </section>
+        </div>
       )}
 
-      {phase !== "setup" && (
-        <section className={styles.block}>
-          <h4>2) Debut de l'histoire</h4>
-          <p>{introText}</p>
-          <p>{middleText}</p>
-        </section>
-      )}
+      {/* ───── PHASE : Choix ───── */}
+      {phase === "choosing" && situation && (
+        <div className={styles.choosingSection}>
+          <div className={styles.choosingHeader}>
+            <span className={styles.storySitEmoji}>⚡</span>
+            <h4 className={styles.choosingTitle}>{situation.choicePrompt}</h4>
+          </div>
 
-      {phase === "middle" && (
-        <section className={styles.block}>
-          <h4>3) Choix au milieu</h4>
-          <p>{profile.middlePrompt}</p>
-          <div className={styles.actionsRow}>
-            {profile.midChoices.map((choice) => (
+          <div className={styles.choiceGrid}>
+            {situation.choices.map((c) => (
               <button
-                key={choice.id}
+                key={c.id}
                 type="button"
-                className={styles.choiceBtn}
-                onClick={() => handleMidChoice(choice)}
+                className={`${styles.choiceCard} ${c.impact === "safe" ? styles.choiceCardSafe : styles.choiceCardRisk}`}
+                onClick={() => handleChoice(c)}
               >
-                <strong>{choice.label}</strong>
-                <span>{choice.learning}</span>
+                <span className={styles.choiceCardEmoji}>{c.emoji}</span>
+                <strong className={styles.choiceCardLabel}>{c.label}</strong>
+                <span className={styles.choiceCardDetail}>{c.detail}</span>
               </button>
             ))}
           </div>
-        </section>
+        </div>
       )}
 
-      {phase === "ending" && finalData && (
-        <section className={styles.block}>
-          <h4>4) Fin conditionnee par tes choix</h4>
-          <p><strong>{finalData.endingTitle}</strong></p>
-          <p>{finalData.endingText}</p>
-          <p className={styles.lesson}>{finalData.lesson}</p>
-          <p>
-            Score reflexe: <strong>{finalData.score}/3</strong>
-          </p>
-          <div className={styles.summary}>
-            <h5>Ce que la plateforme a pu collecter</h5>
-            <ul>
-              <li>Contexte: {selectedPlace?.dataPoint}</li>
-              <li>Donnee sensible exposee potentielle: {selectedCharacter?.riskyData}</li>
-              <li>Usage possible: {selectedAction?.platformUse}</li>
+      {/* ───── PHASE : Fin ───── */}
+      {phase === "ending" && choice && endingTexts && (
+        <div className={styles.endingSection}>
+          {/* Titre de fin */}
+          <div className={`${styles.endingBanner} ${choice.impact === "safe" ? styles.endingBannerSafe : styles.endingBannerRisk}`}>
+            <span className={styles.endingBannerEmoji}>
+              {choice.impact === "safe" ? "🛡️" : "⚠️"}
+            </span>
+            <span>
+              {choice.impact === "safe"
+                ? "Fin positive — données protégées"
+                : "Fin à risque — données exposées"}
+            </span>
+          </div>
+
+          {/* Récit de fin */}
+          <div className={styles.storyBody}>
+            <StoryParagraph delay={0}>{endingTexts.consequence}</StoryParagraph>
+            <div className={styles.storySeparator} />
+            <StoryParagraph delay={150}>{endingTexts.ending}</StoryParagraph>
+          </div>
+
+          {/* Leçon */}
+          <div className={styles.lessonBox}>
+            <span className={styles.lessonIcon}>💡</span>
+            <p className={styles.lessonText}>{choice.lesson}</p>
+          </div>
+
+          {/* Score */}
+          <div className={styles.scoreBox}>
+            <div className={styles.scoreTitle}>Score réflexe numérique</div>
+            <div className={styles.scoreDots}>
+              {[0, 1, 2, 3].map((i) => (
+                <div
+                  key={i}
+                  className={`${styles.scoreDot} ${i < score ? styles.scoreDotFilled : ""}`}
+                />
+              ))}
+            </div>
+            <div className={`${styles.scoreComment} ${styles[`scoreComment_${scoreComment.color}`]}`}>
+              {scoreComment.label}
+            </div>
+            {place?.risk === "high" && choice.impact === "safe" && (
+              <div className={styles.scoreBonus}>
+                +1 bonus — bon réflexe sur un réseau à risque, c'est encore plus fort !
+              </div>
+            )}
+          </div>
+
+          {/* Données collectées */}
+          <div className={styles.dataBox}>
+            <h5 className={styles.dataTitle}>Ce que la situation impliquait pour tes données</h5>
+            <ul className={styles.dataList}>
+              <li>
+                <span className={styles.dataKey}>Contexte :</span> {place?.detail}
+              </li>
+              <li>
+                <span className={styles.dataKey}>Donnée sensible :</span> {hero?.riskyData}
+              </li>
+              <li>
+                <span className={styles.dataKey}>Bon réflexe :</span> {hero?.safeReflex}
+              </li>
             </ul>
           </div>
-          <button type="button" className={styles.mainBtn} onClick={restart}>Rejouer avec d'autres choix</button>
-        </section>
+
+          {/* Rejouer */}
+          <button type="button" className={styles.btnRestart} onClick={restart}>
+            🔄 Rejouer avec d'autres choix
+          </button>
+        </div>
       )}
     </section>
   );

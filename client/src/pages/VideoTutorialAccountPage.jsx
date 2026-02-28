@@ -1,10 +1,10 @@
 export function VideoTutorialAccountPage() {
   return (
     <article className="card">
-      <h2>Tuto video: Securise ton compte en 4 etapes</h2>
+      <h2>Tuto vidéo: Sécurise ton compte en 4 étapes</h2>
       <p>
-        Ce tuto te montre un plan clair et rapide pour proteger ton compte contre le piratage
-        et la perte de controle.
+        Ce tuto te montre un plan clair et rapide pour protéger ton compte contre le piratage
+        et la perte de contrôle.
       </p>
 
       <div
@@ -31,21 +31,21 @@ export function VideoTutorialAccountPage() {
           }}
         >
           <source src="/videos/securise-ton-compte-4-etapes-720p.mp4" type="video/mp4" />
-          Votre navigateur ne prend pas en charge la lecture video.
+          Votre navigateur ne prend pas en charge la lecture vidéo.
         </video>
       </div>
 
-      <h3>Les 4 etapes du tuto</h3>
+      <h3>Les 4 étapes du tuto</h3>
       <ol>
-        <li>Creer un mot de passe long et unique.</li>
+        <li>Créer un mot de passe long et unique.</li>
         <li>Activer la double authentification.</li>
-        <li>Rendre le profil plus prive (messages, visibilite).</li>
-        <li>Verifier les connexions actives et supprimer les sessions inconnues.</li>
+        <li>Rendre le profil plus privé (messages, visibilité).</li>
+        <li>Vérifier les connexions actives et supprimer les sessions inconnues.</li>
       </ol>
 
-      <h3>Bon reflexe a retenir</h3>
+      <h3>Bon réflexe à retenir</h3>
       <p className="highlight">
-        Un compte securise, c est un compte surveille: mets a jour tes reglages regulierement.
+        Un compte sécurisé, c'est un compte surveillé: mets à jour tes réglages régulièrement.
       </p>
     </article>
   );

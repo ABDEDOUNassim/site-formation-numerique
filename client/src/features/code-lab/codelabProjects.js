@@ -877,8 +877,10 @@ function dessiner() {
     ctx.fillStyle = couleurs[l];
     ctx.fillRect(OX + c * (BL + ESP), OY + l * (BH + ESP), BL, BH);
   }
-  ctx.fillStyle = "#60a5fa"; ctx.fillRect(raquette.x, raquette.y, raquette.l, 12);
-  ctx.fillStyle = "#fff"; ctx.beginPath(); ctx.arc(balle.x, balle.y, balle.r, 0, Math.PI * 2); ctx.fill();
+  if (balle && raquette) {
+    ctx.fillStyle = "#60a5fa"; ctx.fillRect(raquette.x, raquette.y, raquette.l, 12);
+    ctx.fillStyle = "#fff"; ctx.beginPath(); ctx.arc(balle.x, balle.y, balle.r, 0, Math.PI * 2); ctx.fill();
+  }
 }
 
 /* ── Boucle d'animation ── */
@@ -931,8 +933,10 @@ function dessiner() {
     ctx.fillStyle = couleurs[l];
     ctx.fillRect(OX + c * (BL + ESP), OY + l * (BH + ESP), BL, BH);
   }
-  ctx.fillStyle = "#60a5fa"; ctx.fillRect(raquette.x, raquette.y, raquette.l, 12);
-  ctx.fillStyle = "#fff"; ctx.beginPath(); ctx.arc(balle.x, balle.y, balle.r, 0, Math.PI * 2); ctx.fill();
+  if (balle && raquette) {
+    ctx.fillStyle = "#60a5fa"; ctx.fillRect(raquette.x, raquette.y, raquette.l, 12);
+    ctx.fillStyle = "#fff"; ctx.beginPath(); ctx.arc(balle.x, balle.y, balle.r, 0, Math.PI * 2); ctx.fill();
+  }
   ctx.fillStyle = "#f0b429"; ctx.font = "14px Arial"; ctx.textAlign = "left";
   ctx.fillText("Score : " + score, 10, 16);
 }

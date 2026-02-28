@@ -1,9 +1,9 @@
 export function VideoTutorialPage() {
   return (
     <article className="card">
-      <h2>Tuto video: Cyberharcelement - Comment reagir ?</h2>
+      <h2>Tuto vidéo: Cyberharcèlement - Comment réagir ?</h2>
       <p>
-        Cette video explique les bons reflexes pour reagir rapidement en cas de cyberharcelement,
+        Cette vidéo explique les bons réflexes pour réagir rapidement en cas de cyberharcèlement,
         sans rester seul.
       </p>
 
@@ -31,28 +31,28 @@ export function VideoTutorialPage() {
           }}
         >
           <source src="/videos/cyberharcelement-comment-reagir-720p.mp4" type="video/mp4" />
-          Votre navigateur ne prend pas en charge la lecture video.
+          Votre navigateur ne prend pas en charge la lecture vidéo.
         </video>
       </div>
 
       <h3>Objectifs du tuto</h3>
       <ul>
-        <li>Comprendre les premiers signaux du cyberharcelement.</li>
-        <li>Savoir quoi faire dans le bon ordre pour se proteger.</li>
-        <li>Identifier les adultes et relais a contacter rapidement.</li>
+        <li>Comprendre les premiers signaux du cyberharcèlement.</li>
+        <li>Savoir quoi faire dans le bon ordre pour se protéger.</li>
+        <li>Identifier les adultes et relais à contacter rapidement.</li>
       </ul>
 
-      <h3>Plan d action en 5 etapes</h3>
+      <h3>Plan d'action en 5 étapes</h3>
       <ol>
-        <li>Ne reponds pas sous la colere.</li>
-        <li>Fais des captures d ecran (preuves).</li>
+        <li>Ne réponds pas sous la colère.</li>
+        <li>Fais des captures d'écran (preuves).</li>
         <li>Bloque le compte qui attaque.</li>
         <li>Signale le contenu ou le profil sur la plateforme.</li>
-        <li>Parle a un adulte de confiance (parent, CPE, educateur).</li>
+        <li>Parle à un adulte de confiance (parent, CPE, éducateur).</li>
       </ol>
 
       <p className="highlight">
-        Message cle: demander de l aide est une force. Tu n as pas a gerer ca seul.
+        Message clé: demander de l'aide est une force. Tu n'as pas à gérer ça seul.
       </p>
     </article>
   );

@@ -84,71 +84,433 @@ async function seedBadges() {
   }
 }
 
-function countWords(text) {
-  return text.trim().split(/\s+/).filter(Boolean).length;
-}
+/* ─────────────────────────────────────────────────────────────────────────────
+   CONTENUS DES HISTOIRES
+   Style inspiré de Freida McFadden : phrases courtes, tension par les détails,
+   monologue intérieur, révélation progressive, résolution sans morale plaquée.
+   Chaque histoire est ancrée dans un fait réel documenté.
+─────────────────────────────────────────────────────────────────────────────── */
 
-function ensureMinWords(text, minWords = 520) {
-  let result = text;
-  const extraParagraph =
-    "A ce moment de l histoire, le plus important est de ralentir, respirer, verifier ce qui est vrai, puis demander de l aide a un adulte de confiance. Ce reflexe protege mieux que les decisions prises sous la pression, la peur ou la confusion.";
+const STORIES_CONTENT = {
 
-  while (countWords(result) < minWords) {
-    result += `\n\n${extraParagraph}`;
-  }
+  /* ── 7-11 ans ── */
 
-  return result;
-}
+  clubEtoiles: `Mina adore le mercredi. C'est son jour préféré — pas l'école, pas les devoirs. Le club de dessin.
 
-function buildLongStoryContent({
-  hero,
-  setting,
-  trigger,
-  firstSignal,
-  escalation,
-  turningPoint,
-  safeActions,
-  supportNetwork,
-  conclusion
-}) {
-  const text = [
-    `${hero} vit dans ${setting}. Un soir ordinaire, ${trigger}. Sur le moment, tout semble banal, presque amusant, mais ${hero} sent un petit doute. Ce doute n est pas un probleme: c est souvent le premier signal qui aide a rester en securite. Dans la formation, on rappelle que les histoires presque vraies ressemblent beaucoup au quotidien. Elles ne servent pas a faire peur, elles servent a montrer des choix concrets. ${hero} decide donc d observer avant d agir, meme si la curiosite est forte.`,
-    `La situation avance par petites etapes. ${firstSignal}. Rien de spectaculaire, juste des details qui paraissent etranges: un message trop presse, une demande trop personnelle, un ton qui change d un coup. Quand cela arrive, beaucoup de jeunes pensent qu ils exagerent. Pourtant, prendre ses impressions au serieux est utile. Un inconfort leger aujourd hui peut eviter un gros probleme demain. ${hero} se rappelle une regle simple: quand un echange demande d aller vite, il faut ralentir. Quand un echange veut du secret absolu, il faut verifier avec un adulte.`,
-    `${hero} en parle d abord a un ami proche. L ami ecoute, mais n a pas toutes les reponses. Ensemble, ils relisent les messages, regardent les parametres de confidentialite, et notent les elements qui posent question. Cette methode est importante: observer, noter, puis agir. Sans preuve, on oublie vite les details. Avec des captures, on peut expliquer clairement la situation. Dans les ateliers, cette etape aide les jeunes a se sentir moins seuls et plus maitres de leurs decisions.`,
-    `Ensuite vient ${escalation}. La pression augmente, parfois avec des phrases qui cherchent a culpabiliser: "si tu refuses, c est que tu ne fais pas confiance", "si tu en parles, tu vas avoir des problemes", "tout le monde fait comme ca". Ces phrases sont des leviers de manipulation. Elles visent a isoler la personne et a lui faire perdre ses reperes. ${hero} reconnait ce mecanisme et decide de ne pas repondre dans l urgence. A la place, ${hero} prend une pause, boit un verre d eau, coupe les notifications dix minutes, puis revient avec une tete plus claire.`,
-    `${turningPoint}. Ce moment change tout: la situation passe d un malaise flou a un plan d action clair. ${hero} comprend que proteger son compte et sa vie privee n est pas dramatiser, c est prendre soin de soi. Il n y a aucune honte a demander de l aide. La honte appartient a ceux qui mettent la pression, pas a la personne qui se protege. Cette idee est centrale pour les jeunes: etre prudent, ce n est pas etre faible, c est etre responsable.`,
-    `Le plan concret commence. ${safeActions}. Chaque action parait simple, mais l ensemble construit une vraie protection. Bloquer coupe le canal de pression. Signaler alerte la plateforme. Changer les reglages limite la diffusion. Mettre un mot de passe solide renforce la securite. Informer un adulte transforme une peur solitaire en resolution accompagnee. ${hero} ne fait pas tout parfaitement du premier coup, et ce n est pas grave. L important est d avancer et de garder la trace de ce qui est fait.`,
-    `Dans les jours suivants, ${hero} observe encore quelques tentatives de contact indirect. Cette phase est frequente. Les personnes malveillantes testent de nouveaux canaux: faux compte, groupe parallele, message par un tiers. Comme ${hero} est prepare, chaque tentative est geree sans panique. Il y a une regle utile: ne pas negocier avec la pression. On applique le meme protocole, encore et encore: preuve, blocage, signalement, adulte de confiance.`,
-    `${supportNetwork}. Le reseau d adultes ne sert pas a punir, il sert a proteger et a expliquer les options. Selon les contextes, cela peut inclure l educateur, le referent scolaire, un parent, ou un professionnel de prevention. Le fait d etre accompagne permet aussi de retablir l estime de soi. Beaucoup de jeunes pensent qu ils ont mal agi. En realite, ils ont surtout besoin d outils clairs et de personnes stables autour d eux.`,
-    `Avec le recul, ${hero} comprend que cette histoire n est pas seulement un danger evite. C est un apprentissage durable. La prochaine fois, les signaux faibles seront vus plus tot. Les reglages seront verifies avant un incident. Les echanges suspects seront identifies plus vite. Et surtout, ${hero} saura qu il est possible de parler sans etre juge. Ce point est essentiel pour la prevention des risques numeriques.`,
-    `${conclusion} L histoire se termine sur une idee simple: le numerique peut rester un espace de jeu, d apprentissage et de lien, a condition de garder des limites claires. Dire non est un droit. Se proteger est normal. Demander de l aide est une competence. Et chaque jeune peut developper ces reflexes, pas a pas, sans culpabilisation.`
-  ].join("\n\n");
+La vieille salle du centre culturel sent les feutres et la colle. Les chaises grincent. Le tableau blanc au fond est couvert d'horaires écrits au marqueur noir. Mina s'en moque. Elle est là pour les couleurs.
 
-  return ensureMinWords(text, 520);
-}
+Ce mercredi, avant de partir, elle sort son téléphone. "On fait une photo !" Les amis se serrent. Tout le monde sourit. Elle appuie.
+
+Elle poste la photo le soir même. En deux heures, quatre-vingts likes. Des cœurs, des étoiles, des "trop mignon". Elle se couche heureuse.
+
+Le lendemain, un commentaire qu'elle ne reconnaît pas. Un pseudo bizarre, aucune photo de profil. "C'est où ce club ? Ça a l'air sympa."
+
+Mina hausse les épaules. Elle ne répond pas.
+
+Le surlendemain, un message direct dans sa messagerie privée. "Salle 3, rue du Moulin, c'est bien ça ? J'habitais dans le coin."
+
+Cette fois, elle se fige.
+
+Comment ce compte connaît l'adresse exacte ?
+
+Elle retourne regarder la photo. Elle zoome sur le fond. Le tableau blanc — elle ne l'avait pas remarqué. L'emploi du temps du club y était écrit en entier. Mercredi. 14h-16h. Salle 3. Rue du Moulin. Et les prénoms de tous les enfants inscrits, listés en colonne.
+
+Tout. Absolument tout était là, dans un coin de l'image.
+
+Elle supprime la photo immédiatement. Trop tard pour les captures d'écran que quelqu'un aurait pu faire — elle ne peut pas le savoir. Mais elle fait ce qu'elle peut.
+
+Elle montre les deux messages à son père. Il les lit deux fois sans rien dire. Puis il pose le téléphone sur la table, doucement, comme si c'était quelque chose de fragile.
+
+"C'est bien que tu m'aies montré."
+
+Ensemble, ils signalent les deux comptes. Ils passent le profil de Mina en privé. Ils préviennent l'animatrice du club, qui efface le tableau blanc avant la prochaine séance.
+
+L'animatrice dit qu'elle ne savait pas. Personne ne savait. Ce genre d'information, visible en arrière-plan d'une photo joyeuse, ça ne se remarque pas. Pas au premier coup d'œil.
+
+Mais ça se voit, si on sait quoi chercher.
+
+Les semaines suivantes, Mina continue de poster ses dessins — des créations, des couleurs, des gribouillages qui font rire. Mais avant chaque photo, elle regarde l'arrière-plan. Elle cherche les tableaux, les agendas, les enseignes, les adresses.
+
+Elle apprend le même réflexe à ses amis. L'un d'eux trouve, sur une vieille photo de classe, le nom de son école sur un cahier ouvert posé sur un bureau.
+
+Ils passent un mercredi entier à revoir leurs anciens posts.
+
+L'animatrice dit que c'est la chose la plus utile qu'ils aient jamais faite au club.
+
+Mina, elle, pense encore à ce tableau blanc. À cette information invisible qui était là, dans chaque image, depuis le début.
+
+Elle ne regardera plus jamais une photo de la même façon.`,
+
+  dragonGentil: `Noé joue à Minecraft depuis l'âge de six ans. Il connaît les recettes par cœur. Il sait construire une maison en quinze minutes et éviter les creepers dans le noir.
+
+Ce qu'il ne sait pas encore, c'est reconnaître certains joueurs.
+
+DragonGentil arrive sur son serveur un mardi soir. Il joue bien. Très bien. Il aide Noé à finir sa tour, lui offre des ressources rares, le fait rire avec des blagues sur les cochons en feu. En deux jours, ils jouent ensemble chaque soir après les devoirs.
+
+"T'as quel âge ?" demande DragonGentil, entre deux blocs posés.
+
+"Neuf ans."
+
+"Trop bien. Moi j'ai onze ans. On est presque pareils."
+
+Noé ne se pose pas de question. C'est normal de parler dans le jeu.
+
+Le lendemain, DragonGentil demande son prénom. "Pour savoir comment t'appeler pour de vrai."
+
+Noé dit Noé.
+
+Trois jours plus tard, DragonGentil demande dans quelle école il va. "Pour voir si on est du même quartier — peut-être qu'on se connaît dans la vraie vie !"
+
+Noé commence à taper le nom de l'école. Puis il s'arrête.
+
+Un truc le dérange. Il n'arrive pas à mettre des mots dessus. Juste quelque chose qui gratte, quelque chose qui dit non.
+
+Il met le jeu en pause. Il va voir sa mère.
+
+Elle lit les messages. Elle relit. Puis elle fait quelque chose de simple — elle aligne les questions posées par DragonGentil dans l'ordre où elles sont venues. Âge. Prénom. École. Quartier. Une par une, étalées sur huit jours. Chacune semblait normale. Ensemble, elles forment quelque chose de différent.
+
+Une carte. Un profil. Une adresse qui se construit, morceau par morceau.
+
+"Est-ce que tu l'as vu en vrai ?" demande sa mère.
+
+"Non."
+
+"Est-ce que tu sais son vrai nom ?"
+
+"Non."
+
+Elle lui montre ce qu'elle voit. Noé regarde longtemps. Il pense à combien il aimait jouer avec DragonGentil. Combien c'était marrant. Puis il pense à l'école qu'il avait failli taper.
+
+Il bloque le compte. Il le signale au serveur.
+
+Deux semaines plus tard, un autre enfant de la même session raconte la même histoire. DragonGentil, les mêmes questions, dans le même ordre, sur le même ton sympa. Cet enfant avait donné le nom de son école. Et l'heure à laquelle sa mère venait le chercher.
+
+DragonGentil n'avait probablement pas onze ans. Il n'était probablement pas non plus un enfant.
+
+Noé continue de jouer à Minecraft. Il aide les nouveaux, il construit, il rit. Mais maintenant, il a une règle simple : les vrais amis, il les connaît dans la vraie vie d'abord.
+
+Les inconnus en ligne, même les plus gentils, n'ont pas besoin de savoir où il est à l'école, à quelle heure il sort, et dans quel quartier il habite.
+
+Ce reflexe — celui de s'arrêter juste avant de taper l'information — lui avait semblé tout petit sur le moment.
+
+Il ne l'était pas.`,
+
+  secretGroupe: `Le groupe s'appelait "Arc-en-ciel 🌈" et il existait depuis octobre. Quinze enfants de la classe. Des mèmes, des blagues, des photos de devoirs. Lina l'adorait.
+
+Jusqu'à jeudi matin.
+
+Jeudi matin, Matteo poste un message : "Nouveau défi. Si tu restes dans le groupe, tu dois dire un secret que t'as jamais dit à personne. Sinon t'es exclu."
+
+Les premiers secrets arrivent vite. Des petites choses. Quelqu'un qui a triché à un devoir. Quelqu'un qui mange des bonbons la nuit sous la couette.
+
+Lina rit. Tout le monde rit.
+
+Le lendemain, les secrets changent. Plus personnels. Un enfant écrit qu'il a peur du noir. Un autre qu'il pleure parfois le soir sans savoir pourquoi. Un troisième confie quelque chose sur sa famille qu'il n'avait jamais dit à voix haute.
+
+Ces choses-là, elles ne font plus rire Lina de la même façon.
+
+Elle lit. Elle relit. Elle pense à ces mots écrits dans la précipitation, dans l'envie de rester dans le groupe. Des mots vrais. Des mots fragiles.
+
+Le soir, elle voit un message d'un élève d'une autre classe — quelqu'un qui n'est même pas dans le groupe "Arc-en-ciel". Il cite le secret de ce garçon qui pleure la nuit. Mot pour mot. Avec des émojis moqueurs.
+
+Quelqu'un avait fait une capture. Et l'avait envoyée à l'extérieur.
+
+Lina quitte le groupe.
+
+Elle n'est pas sûre que c'est la bonne décision. Elle a peur d'être exclue. D'être celle qui a "cassé l'ambiance". Mais elle ne peut pas effacer l'image de ce message moqueur dans sa tête.
+
+Elle montre la capture à sa maîtresse. La maîtresse est silencieuse un long moment. Elle ne crie pas. Elle ne punit pas. Elle demande juste : "Tu sais comment ce message est sorti du groupe ?"
+
+"Quelqu'un a fait une capture."
+
+"C'est ça." Elle pose la tablette. "Lina, un secret dans un groupe de quinze personnes, c'est un secret que quinze personnes peuvent partager."
+
+Le lendemain, la maîtresse parle à la classe entière. Pas pour punir. Pour expliquer. Un groupe privé sur une application n'a rien d'une boîte fermée à clé. N'importe qui, à n'importe quel moment, peut capturer ce qui y est écrit.
+
+L'enfant qui avait parlé de ses larmes est assis au fond. Il ne dit rien pendant toute la séance.
+
+Ce soir-là, Lina lui envoie un message direct — rien qu'à lui, pas dans le groupe.
+
+"Je suis désolée que ça soit sorti."
+
+Il répond un seul mot : "Merci."
+
+Le groupe "Arc-en-ciel" est dissous. Un nouveau groupe naît la semaine suivante — sans défi, sans secrets forcés, sans pression d'entrée.
+
+Lina y retourne. Cette fois, elle sait exactement ce qu'elle n'écrira jamais dans un groupe, peu importe combien il semble fermé.
+
+Fermé ne veut pas dire sûr. Ça veut juste dire que moins de gens voient.
+
+Pour l'instant.`,
+
+  /* ── 12-14 ans ── */
+
+  defiViral: `Le défi s'appelait #StuntSchool. La règle était simple : filmer quelqu'un qui glisse ou trébuche en classe, à son insu, et poster la vidéo.
+
+En une semaine : deux cents vidéos. Des milliers de vues. Des collégiens qui riaient sur les écrans. D'autres qui pleuraient dans les couloirs.
+
+Yanis refuse dès le premier jour.
+
+Ses amis insistent. "C'est pour rire." Puis : "T'es trop sérieux." Puis : "T'as même pas posté — t'as peur ou quoi ?"
+
+Yanis dit non. Il ne filme pas. Il ne poste pas. Il ne partage pas.
+
+Mais la pression dure. Chaque matin, un nouveau message dans le groupe de classe. Chaque soir, une nouvelle vidéo où quelqu'un trébuche, tombe, se retrouve humilié pour un instant capturé sans son accord. Et parfois, de plus en plus souvent, le visage de la personne filmée ne rit pas.
+
+Il a peur. Vraiment peur.
+
+Le vrai tournant arrive un vendredi. Une vidéo de Sofiane — élève de troisième, que tout le monde connaît — devient virale. Pas seulement dans le collège. Dans le département entier. Sur TikTok, sur Instagram, dans des groupes WhatsApp que personne ne contrôle.
+
+En quatre-vingt-seize heures, Sofiane est devenu un mème.
+
+Yanis regarde la vidéo. Il reconnaît quelque chose dans le visage de Sofiane. Ce n'est pas de la honte. C'est de la terreur. Ce moment — une demi-seconde de chute captée sans prévenir — tourne en boucle, découpé, remonté, commenté, moqué.
+
+Sofiane n'avait rien fait. Il était juste là.
+
+Le lundi matin, la chaise de Sofiane est vide.
+
+Yanis montre tout au CPE. Les captures de conversation. Les pressions qu'il avait reçues. La vidéo de Sofiane et les comptes qui la relayaient. Il ne dénonce personne par vengeance. Il documente ce qui s'est passé.
+
+Le CPE contacte les parents de Sofiane. L'établissement signale la vidéo en masse sur la plateforme. Elle est retirée au bout de quarante-huit heures.
+
+Sofiane revient deux semaines plus tard. Il s'assoit. Il ne dit pas grand-chose la première journée.
+
+Dans le couloir de la cantine, il passe près de Yanis et dit simplement : "Merci."
+
+Juste ça. Puis il continue de marcher.
+
+Le défi #StuntSchool sera plus tard cité dans un rapport parlementaire sur les challenges violents sur les plateformes. Plusieurs élèves de différents établissements ont été victimes de la même mécanique : filmer l'autre sans son accord, humilier en public, forcer la participation par la peur de l'exclusion.
+
+Yanis n'est jamais devenu populaire pour ce qu'il a fait. Certains lui en ont voulu pendant des semaines.
+
+Mais il y a des choses qu'il ne peut pas défaire. Sofiane dans ce couloir. Ce "merci" dit rapidement, sans s'arrêter.
+
+C'est suffisant.`,
+
+  fauxCompte: `Camille le découvre par hasard, à vingt-deux heures.
+
+Juliette lui envoie un message : "T'as ouvert un deuxième compte ?"
+
+Camille ne comprend pas. Elle tape son prénom et son nom sur Instagram.
+
+Le compte apparaît immédiatement. Sa vraie photo de profil. Son vrai prénom et son vrai nom de famille. Le nom de son collège dans la bio.
+
+Et des messages — envoyés à ses amis, depuis ce faux compte, depuis au moins dix jours. Des demandes de photos. Des questions sur leur vie privée. Des rumeurs sur des élèves qu'elle n'a jamais rencontrés, racontées avec sa voix, son ton, ses emojis habituels.
+
+En lisant les messages, Camille a froid.
+
+Quelqu'un se fait passer pour elle. Depuis combien de temps ? Combien de personnes ont répondu en croyant parler à elle ?
+
+Elle compte. Dix-sept contacts de sa liste d'amis avaient répondu au faux compte. Certains avaient donné des informations. Des photos de groupe. Des captures de conversations privées. Des détails sur d'autres élèves.
+
+Elle prend une capture d'écran du faux profil. Elle change son mot de passe. Elle active la double vérification.
+
+Elle appelle sa mère.
+
+Ensemble, elles déposent un signalement pour usurpation d'identité sur Instagram. Elles envoient également un signalement à Cybermalveillance.gouv.fr, la plateforme nationale. Le faux compte est suspendu quarante-huit heures plus tard.
+
+Mais Camille ne sait pas ce qui a été envoyé pendant ces dix jours. Elle ne sait pas qui a répondu, quoi, à quel moment.
+
+Le lendemain à l'école, elle explique à ses amis ce qui s'est passé. Ceux qui avaient répondu au faux compte sont gênés. Elle ne leur en veut pas. Elle aurait peut-être répondu aussi, si quelqu'un avait copié l'identité d'une amie à elle.
+
+Ce qui l'avait sauvée, c'était la question de Juliette. Pas une certitude — juste un doute. "T'as ouvert un deuxième compte ?"
+
+Une question posée avant de répondre. Un instant de vérification.
+
+Le professeur principal organise un atelier avec le référent numérique de l'établissement. Camille y raconte ce qu'elle a vécu. Comment le faux compte était convaincant — les mêmes emojis, le même ton, son vrai visage en photo de profil.
+
+Un élève lève la main : "Comment on vérifie que c'est le vrai compte de quelqu'un ?"
+
+C'est la bonne question.
+
+Camille explique. La date de création du compte. Le nombre d'abonnements. Les incohérences dans les messages. Et surtout : appeler directement la personne, en vrai, avant de répondre à quoi que ce soit.
+
+Une règle simple. Presque évidente, une fois qu'on l'a apprise.`,
+
+  groupePrive: `Le groupe s'appelait "La vraie vie 👀". Dix-neuf membres. Inès l'adorait — les mèmes, les blagues, les rires du vendredi soir.
+
+Jusqu'à ce vendredi-là.
+
+Ce vendredi, quelqu'un poste une photo de Damien. Prise sans qu'il le sache, en classe, cadrage serré sur son visage, avec un commentaire cruel sur son apparence. Le groupe explose. Les messages s'enchaînent. Vingt. Trente. Cinquante réponses en quarante minutes.
+
+Inès lit. Elle ne rit pas.
+
+Elle n'écrit rien non plus. Elle reste là à regarder les messages défiler, avec cette sensation de plus en plus lourde — quelque chose entre la gêne et quelque chose qui ressemble à de la honte. Pas parce qu'elle a participé. Parce qu'elle est là.
+
+Le samedi matin, un message direct dans sa messagerie privée.
+
+"T'as pas répondu dans le groupe. Tu prends la défense de Damien ? Attention, la prochaine, ça pourrait être toi."
+
+Inès fait une capture du message. Puis elle quitte le groupe.
+
+Le lundi, un montage — photo de Damien, texte exagéré, émojis moqueurs — commence à circuler en dehors du groupe. Dans d'autres classes. Dans un groupe de quartier. La mère de Damien le voit sur le téléphone d'un cousin.
+
+Elle appelle l'établissement.
+
+Inès montre ses captures à la CPE ce matin-là — avant même d'avoir su que la mère de Damien avait appelé. Tout : le premier message cruel, les cinquante réponses, la menace reçue en direct. Elle ne cache rien, elle n'arrange rien.
+
+L'enquête de l'établissement prend deux semaines. Plusieurs élèves sont convoqués. Le groupe est dissous. Certains parents sont contactés.
+
+Damien revient en classe quelques jours après. Il s'assoit. Il ne dit pas grand-chose.
+
+Inès ne sait pas s'il sait qu'elle a transmis les captures. Elle n'a pas demandé de remerciements. Elle avait juste fait ce qui lui semblait juste au moment où c'était encore possible d'agir.
+
+Ce que le groupe avait oublié — et qu'Inès n'oublie plus — c'est que "privé" ne veut pas dire "invisible". Ça veut juste dire que moins de gens voient.
+
+Pour l'instant.
+
+Une fois qu'une capture sort, le groupe n'est plus privé. Il n'y a pas de retour arrière possible. Ce qui a été écrit en riant, à vingt-deux heures un vendredi soir, peut se retrouver dans la main d'un parent, d'un professeur, d'un étranger — le lundi matin, sans prévenir.
+
+Inès y pense encore, parfois, avant d'envoyer un message dans un groupe.
+
+Elle pense à Damien. Et elle ne l'envoie pas.`,
+
+  /* ── 15-17 ans ── */
+
+  captureStage: `Sara avait trouvé le stage de ses rêves.
+
+Cabinet d'architecture. Trois semaines. Rémunéré. L'entretien téléphonique s'était bien passé — la responsable avait semblé convaincue. Sara attendait la confirmation depuis cinq jours.
+
+Le message est arrivé un jeudi soir. Pas un appel. Pas un email. Un DM Instagram, d'un compte qu'elle ne reconnaissait pas.
+
+"Tu savais que ta conversation avec Léa circule dans un groupe ?"
+
+Sara avait eu quinze ans en 2022. Cette nuit-là — la nuit où elle avait écrit des choses blessantes sur sa prof de physique dans un groupe WhatsApp — elle s'était réveillée le lendemain comme si rien ne s'était passé.
+
+La conversation, elle, n'avait pas oublié.
+
+Quelqu'un l'avait capturée. L'avait gardée. Puis l'avait repartagée deux ans plus tard, dans un groupe local, avec son nom complet en visible — et le nom du cabinet où elle postulait.
+
+Sara cherche la conversation sur ses anciens téléphones. Elle la retrouve. Elle relit. Elle voit ce qu'elle avait écrit à quinze ans, fatiguée, dans un groupe qu'elle croyait fermé.
+
+Ces mots-là, elle ne les écrirait plus. Mais ils existent encore, quelque part, dans la mémoire d'un téléphone qu'elle ne contrôle pas.
+
+L'entretien de confirmation avec la responsable du cabinet a lieu le lendemain. La femme ne mentionne rien pendant les vingt premières minutes. Puis :
+
+"J'ai vu circuler quelque chose à votre sujet. Je veux vous donner la chance de vous expliquer."
+
+Sara explique. Pas d'excuses vides. Des faits. Elle avait quinze ans. Le contexte d'une conversation de fin de journée dans un groupe de classe. Ce qu'elle a appris depuis. Elle regarde la responsable dans les yeux sans détourner le regard.
+
+Silence.
+
+"Je vous rappelle demain."
+
+La nuit est longue.
+
+Le lendemain, la responsable rappelle. Elle dit oui.
+
+Sara ne sait pas si elle aurait obtenu le même résultat avec quelqu'un d'autre. Elle ne le saura jamais. D'autres candidats, dans d'autres secteurs, n'ont pas eu cette chance.
+
+Ce qu'elle sait maintenant : elle passe une heure, une fois par mois, à chercher son nom sur Google. À vérifier ses anciens comptes et leurs paramètres de visibilité. À supprimer ce qui n'appartient plus à qui elle est.
+
+Pas par peur. Par précaution.
+
+Elle conseille la même chose à ses amis. La plupart haussent les épaules — "personne va chercher mon nom". Certains ont cherché. Ils ont trouvé des choses qu'ils avaient oubliées.
+
+Une photo de 2021 sur un compte désactivé, toujours indexée par Google. Un commentaire d'une vieille vidéo YouTube. Un pseudo d'enfance lié à leur vrai nom dans un forum de jeu.
+
+Des traces légères. Presque invisibles. Jusqu'au moment où quelqu'un les cherche vraiment.
+
+À dix-sept ans, on construit quelque chose. L'image en ligne fait partie de cette construction — que ce soit voulu ou non.
+
+Sara préfère la construire consciemment.`,
+
+  vocalPression: `Nassim avait envoyé le vocal en mars. Une vraie confidence. Il faisait confiance à Karim — ils se connaissaient depuis le CM2.
+
+En mai, Karim avait besoin d'une faveur.
+
+Un message simple, sans ponctuation, envoyé comme si c'était une blague : "tu te rappelles ton vocal de mars il est encore là"
+
+Nassim a relu trois fois. Puis il a compris.
+
+Karim voulait que Nassim dise quelque chose à la petite amie de son frère. Un mensonge précis. Un service rendu en échange d'un silence.
+
+Nassim écrit : "Non."
+
+Karim répond avec une capture du vocal. "T'es sûr ?"
+
+Nassim pose le téléphone. Il s'assoit sur son lit. Il pense.
+
+Il aurait pu céder. C'est ce que le chantage demande — juste une fois, juste pour que ça s'arrête. Mais il sait comment ça finit. Une fois n'arrête jamais rien. Une faveur appelle une faveur. Et la personne qui cède devient une personne qu'on peut faire céder encore.
+
+Il ouvre une nouvelle conversation, fait des captures de tout l'échange — chaque message, chaque capture envoyée par Karim. Puis il bloque le numéro.
+
+Le soir même, il parle à sa sœur. Elle lit les messages en silence. Elle dit : "T'as bien fait."
+
+Ensemble, ils vont sur Cybermalveillance.gouv.fr et lisent la procédure pour signaler un chantage numérique. Ils déposent un signalement sur la plateforme Pharos — la plateforme nationale de signalement des contenus illicites sur Internet. Ils appellent le 3018, le numéro national de lutte contre le cyberharcèlement, pour avoir des conseils.
+
+Karim envoie le vocal à deux personnes. Nassim l'apprend. Il contacte lui-même ces deux personnes pour leur expliquer le contexte — ce qu'il avait dit, pourquoi, et ce qui s'était passé ensuite. Sans honte. Avec des faits.
+
+Elles comprennent.
+
+Le chantage avait misé sur deux choses : la honte et l'isolement. Dès que Nassim avait parlé — à sa sœur, aux deux personnes visées — le levier avait disparu. Il n'y avait plus rien à menacer de révéler, puisque Nassim l'avait dit lui-même.
+
+Nassim ne reverra plus Karim. Ce n'est pas une perte.
+
+Ce qu'il comprend maintenant — et qu'il n'avait pas vu venir — c'est à quelle vitesse une confidence peut devenir une arme dans de mauvaises mains. Pas parce que la confidence était honteuse. Mais parce que la personne en face avait décidé de s'en servir.
+
+Les vocaux restent. Les messages restent. Les captures restent. Tant qu'ils sont entre des mains malveillantes, ils peuvent servir de levier.
+
+La meilleure réponse n'est pas le silence. Ce n'est pas céder non plus. C'est parler aux bonnes personnes, avant que la peur ne décide à la place.`,
+
+  compteEsport: `Rayan avait mis quatre ans à construire ce compte.
+
+Quatre ans de parties, de classements, de skins achetés avec de l'argent de poche économisé semaine après semaine. Son équipe le connaissait. Les tournois régionaux le connaissaient. Son pseudo — RK_Rayan — apparaissait dans les archives de trois compétitions en ligne.
+
+Le vendredi soir, son compte se déconnecte automatiquement.
+
+Il se reconnecte. Mot de passe refusé.
+
+Il essaie de réinitialiser. L'adresse email de récupération — celle qu'il utilise depuis la cinquième — renvoie un message d'erreur : compte inexistant.
+
+Quelqu'un avait changé l'adresse de récupération.
+
+Rayan passe deux heures sur les forums. Les tutoriels. La page support officielle. Il suit la procédure — longue, avec des formulaires en anglais, sans aucune garantie.
+
+En attendant, il cherche son pseudo sur Google.
+
+Premier résultat : une annonce sur un forum gris. "Compte Valorant niveau 800, skins rares, 17 victoires de tournoi. Vente immédiate : 120 euros."
+
+Son propre compte. En vente par quelqu'un d'autre.
+
+Son père l'aide à contacter le support officiel. Un ami plus âgé lui montre le site HaveIBeenPwned.com — une base de données qui recense les fuites de données signalées. Il entre l'adresse email qu'il utilisait depuis la cinquième.
+
+Résultat immédiat : cette adresse avait été compromise dans une fuite de données d'un site de streaming en 2021. Des millions d'adresses et de mots de passe exposés.
+
+Rayan avait utilisé le même mot de passe sur le site de streaming et sur son compte de jeu.
+
+C'était tout ce qu'il avait fallu. Une fuite sur un site qu'il avait oublié. Le même mot de passe réutilisé. Deux secondes pour entrer.
+
+Le support récupère le compte en dix-huit jours.
+
+Dix-huit jours sans équipe. Sans parties. Sans tournois.
+
+Quand il retrouve l'accès, il passe une soirée entière à sécuriser chacun de ses comptes. Un mot de passe unique pour chacun, généré par un gestionnaire de mots de passe. Double vérification sur tous les comptes importants. Sessions actives vérifiées et fermées une par une — il trouve des connexions depuis des villes qu'il n'a jamais visitées.
+
+Son père fait la même chose pour ses comptes à lui, ce soir-là.
+
+RK_Rayan joue à nouveau. Les tournois recommencent. L'équipe l'attend.
+
+Mais le mot de passe de la cinquième — celui qu'il gardait depuis trois ans parce qu'il était "facile à retenir", parce que le changer semblait compliqué, parce que ça n'arriverait sûrement pas à lui — n'existe plus nulle part.
+
+Ce n'est pas grand-chose, changer un mot de passe. Ça prend deux minutes.
+
+Ça avait failli lui coûter quatre ans de travail.`
+
+};
 
 async function seedStories(ageBands, adminId) {
   const byCode = Object.fromEntries(ageBands.map((a) => [a.code, a.id]));
   const stories = [
     {
-      title: "Le club des etoiles et la photo trop precise",
+      title: "Le club des étoiles et la photo trop précise",
       slug: "club-etoiles-photo-trop-precise",
       theme: "image",
-      summary: "Une photo joyeuse revele sans le vouloir des infos privees d une classe.",
-      content: buildLongStoryContent({
-        hero: "Mina",
-        setting: "un quartier calme ou son club de dessin se retrouve le mercredi",
-        trigger: "Mina partage une photo du club avec un tableau d horaires visible derriere elle",
-        firstSignal: "un compte inconnu commente en citant exactement le lieu et l heure du prochain atelier",
-        escalation: "des captures de la photo circulent dans un autre groupe avec des blagues lourdes",
-        turningPoint: "quand la petite soeur de Mina recoit un message d un inconnu qui connait le nom du club",
-        safeActions: "Elle supprime la publication, demande les suppressions, rend le compte prive, et remplace la photo par un dessin",
-        supportNetwork: "Mina en parle a l animatrice du club, puis a son pere, qui l aide a signaler les comptes",
-        conclusion: "Mina continue de publier ses creations, mais en verifiant toujours l arriere plan avant chaque envoi."
-      }),
-      whatHappens: "Une image peut divulguer des details de lieu, d horaires ou d habitudes.",
-      howToProtect: "Verifier le decor, cacher les infos sensibles, publier en prive et avec accord.",
-      whoToTell: "Un parent, un educateur, un animateur ou un adulte referent du groupe.",
+      summary: "Une photo joyeuse révèle sans le vouloir l'adresse exacte d'un club, les horaires et les prénoms de tous les enfants.",
+      content: STORIES_CONTENT.clubEtoiles,
+      whatHappens: "Une photo peut contenir des informations cachées en arrière-plan : adresses, horaires, noms. Ces détails sont invisibles au premier regard, mais lisibles par n'importe qui.",
+      howToProtect: "Avant de poster une photo, regarder l'arrière-plan. Chercher les tableaux, les enseignes, les agendas, les noms visibles. Publier en privé et demander l'accord des personnes présentes.",
+      whoToTell: "Un parent, un animateur ou un adulte référent du groupe. Signaler les comptes inconnus directement sur l'application.",
       status: "published",
       publishedAt: new Date(),
       ageBandId: byCode["7_11"],
@@ -159,21 +521,11 @@ async function seedStories(ageBands, adminId) {
       title: "Le dragon gentil du chat de jeu",
       slug: "dragon-gentil-chat-jeu",
       theme: "inconnus",
-      summary: "Un joueur tres sympa demande peu a peu des informations personnelles.",
-      content: buildLongStoryContent({
-        hero: "Noe",
-        setting: "une petite equipe qui joue a un jeu de construction apres les devoirs",
-        trigger: "Noe rencontre un joueur nomme DragonGentil qui gagne vite sa confiance",
-        firstSignal: "DragonGentil demande le prenom complet, puis l ecole, en disant que c est pour etre amis pour de vrai",
-        escalation: "le joueur insiste et promet des cadeaux si Noe donne son adresse",
-        turningPoint: "quand DragonGentil envoie une photo trouvee en ligne en pretendant que c est sa maison",
-        safeActions: "Noe bloque le compte, coupe le chat prive, garde des captures, et active la liste d amis restreinte",
-        supportNetwork: "Noe montre les messages a sa mere et a l educateur de l etude",
-        conclusion: "Noe garde le plaisir du jeu en equipe, mais il reserve ses infos personnelles a sa vraie vie hors ligne."
-      }),
-      whatHappens: "Une relation en ligne peut sembler gentille mais cacher une intention de collecte d infos.",
-      howToProtect: "Ne pas partager ecole, adresse, telephone, activer la confidentialite des messages.",
-      whoToTell: "Un parent, un frere ou une soeur adulte, un educateur ou un enseignant de confiance.",
+      summary: "Un joueur très sympa construit la confiance sur plusieurs jours avant de demander, question par question, des informations personnelles.",
+      content: STORIES_CONTENT.dragonGentil,
+      whatHappens: "Certains adultes se font passer pour des enfants en ligne. Ils construisent la confiance lentement, posent des questions personnelles une par une, séparées de plusieurs jours pour ne pas alerter.",
+      howToProtect: "Ne jamais donner son école, son adresse, son quartier ou ses horaires à quelqu'un rencontré uniquement en ligne, même s'il semble sympa. Signaler au parent dès qu'une question semble étrange.",
+      whoToTell: "Un parent, un frère ou une sœur adulte, un éducateur. Montrer les messages tels quels, sans les supprimer.",
       status: "published",
       publishedAt: new Date(),
       ageBandId: byCode["7_11"],
@@ -181,24 +533,14 @@ async function seedStories(ageBands, adminId) {
       updatedBy: adminId
     },
     {
-      title: "Le secret du groupe arc en ciel",
+      title: "Le secret du groupe arc-en-ciel",
       slug: "secret-groupe-arc-en-ciel",
       theme: "secrets",
-      summary: "Un secret demande dans un groupe prive devient une source de pression.",
-      content: buildLongStoryContent({
-        hero: "Lina",
-        setting: "une classe ou tout le monde partage des dessins et des blagues dans un groupe prive",
-        trigger: "un camarade lance un defi: dire un secret personnel pour rester dans le groupe",
-        firstSignal: "les premiers secrets racontes sont ensuite repetes en dehors du groupe",
-        escalation: "un membre menace d exclure Lina si elle refuse de raconter quelque chose de tres intime",
-        turningPoint: "quand Lina voit un secret d un autre enfant moque par des eleves d une autre classe",
-        safeActions: "Elle refuse le defi, quitte temporairement le groupe, et garde des captures des menaces",
-        supportNetwork: "Lina parle a la maitresse, puis a son oncle, et un cadre clair est rappele a toute la classe",
-        conclusion: "Lina revient dans des espaces numeriques plus sains, ou le respect passe avant le spectacle."
-      }),
-      whatHappens: "Le secret force n est pas un jeu: c est une pression qui peut blesser longtemps.",
-      howToProtect: "Refuser, sortir du groupe, garder des preuves et demander un cadre adulte.",
-      whoToTell: "Maitresse, parent, educateur, animateur periscolaire.",
+      summary: "Un défi dans un groupe privé force les enfants à partager des secrets intimes. L'un d'eux est capturé et moqué à l'extérieur du groupe.",
+      content: STORIES_CONTENT.secretGroupe,
+      whatHappens: "Un groupe de messagerie privé n'est pas une boîte fermée. N'importe quel membre peut capturer ce qui y est écrit et le partager ailleurs. Un secret partagé à quinze personnes n'est plus un secret.",
+      howToProtect: "Refuser les défis qui demandent des informations personnelles ou intimes. Quitter un groupe qui devient une source de pression. Garder des captures si des menaces sont envoyées.",
+      whoToTell: "La maîtresse, un parent, un éducateur ou un animateur périscolaire. Signaler les captures humiliantes sur la plateforme où elles circulent.",
       status: "published",
       publishedAt: new Date(),
       ageBandId: byCode["7_11"],
@@ -206,24 +548,14 @@ async function seedStories(ageBands, adminId) {
       updatedBy: adminId
     },
     {
-      title: "Le defi viral du college",
+      title: "Le défi viral du collège",
       slug: "defi-viral-college",
       theme: "pression",
-      summary: "Un challenge presente comme drole pousse des eleves a se filmer dans des situations risquee.",
-      content: buildLongStoryContent({
-        hero: "Yanis",
-        setting: "un college ou les trends videos changent chaque semaine",
-        trigger: "un defi viral demande de filmer une action humiliante en classe pour gagner des likes",
-        firstSignal: "des eleves disent que refuser le defi veut dire etre faible",
-        escalation: "un montage cible Yanis avec des messages repetes pour le forcer a participer",
-        turningPoint: "quand une video d un autre eleve revient plusieurs mois plus tard dans un nouveau groupe",
-        safeActions: "Yanis refuse, signale le contenu, bloque les comptes insistants, et renforce ses reglages de partage",
-        supportNetwork: "il contacte son CPE, sa mere et un educateur de quartier pour ne pas rester seul",
-        conclusion: "Yanis comprend qu un non clair vaut mieux qu un oui regrette qui laisse une trace durable."
-      }),
-      whatHappens: "Le groupe utilise la peur d exclusion pour imposer un comportement risque.",
-      howToProtect: "Refuser, ne pas negocier, documenter les faits et mobiliser les adultes referents.",
-      whoToTell: "CPE, professeur principal, parent, educateur de prevention.",
+      summary: "Un challenge filmé humilie un élève devant tout le collège. Sa vidéo devient virale. Il n'est plus là le lundi matin.",
+      content: STORIES_CONTENT.defiViral,
+      whatHappens: "Les challenges viraux utilisent la peur de l'exclusion pour forcer la participation. Filmer quelqu'un sans son accord est une violence, même si tout le monde rit. Une vidéo postée peut circuler pendant des années, hors de tout contrôle.",
+      howToProtect: "Refuser de participer sans se justifier. Ne pas filmer quelqu'un sans son accord. Signaler les vidéos humiliantes sur la plateforme. Documenter les pressions reçues avec des captures.",
+      whoToTell: "Le CPE, le professeur principal, un parent. Ne pas rester seul face à la pression du groupe.",
       status: "published",
       publishedAt: new Date(),
       ageBandId: byCode["12_14"],
@@ -234,21 +566,11 @@ async function seedStories(ageBands, adminId) {
       title: "Le faux compte de Camille",
       slug: "faux-compte-camille",
       theme: "manipulation",
-      summary: "Un faux profil imite une eleve pour recuperer des informations privees.",
-      content: buildLongStoryContent({
-        hero: "Camille",
-        setting: "une classe de quatrieme tres active sur les reseaux",
-        trigger: "un compte copie sa photo de profil et contacte ses amis en pretendant etre elle",
-        firstSignal: "plusieurs amis recoivent des demandes d infos incoherentes depuis ce faux compte",
-        escalation: "le faux profil demande des captures de conversations privees et des photos personnelles",
-        turningPoint: "quand Camille est accusee a tort d avoir diffuse une rumeur qu elle n a jamais envoyee",
-        safeActions: "Elle declare l usurpation, prouve le vrai compte, change ses mots de passe et active la double verification",
-        supportNetwork: "Camille sollicite ses parents, la vie scolaire et une mediatrice numerique",
-        conclusion: "Camille transforme l incident en atelier de classe sur l usurpation et la verification des comptes."
-      }),
-      whatHappens: "L usurpation d identite brouille la confiance et peut creer des conflits rapides.",
-      howToProtect: "Verifier les comptes, signaler l usurpation, changer les acces et informer son entourage.",
-      whoToTell: "Parents, equipe educative, referent numerique de l etablissement.",
+      summary: "Un faux profil copie l'identité de Camille et contacte ses amis pendant dix jours. Elle le découvre par hasard, à vingt-deux heures.",
+      content: STORIES_CONTENT.fauxCompte,
+      whatHappens: "L'usurpation d'identité consiste à créer un faux compte avec la photo et le nom de quelqu'un pour contacter ses proches. Elle peut durer des semaines avant d'être détectée. Elle est signalable directement sur les plateformes.",
+      howToProtect: "Vérifier ses paramètres de confidentialité. Activer la double vérification. Chercher régulièrement son nom sur les plateformes. Poser une question directe à quelqu'un avant de répondre à un compte qui prétend être lui.",
+      whoToTell: "Les parents, le référent numérique de l'établissement. Signaler l'usurpation sur la plateforme et sur Cybermalveillance.gouv.fr.",
       status: "published",
       publishedAt: new Date(),
       ageBandId: byCode["12_14"],
@@ -256,24 +578,14 @@ async function seedStories(ageBands, adminId) {
       updatedBy: adminId
     },
     {
-      title: "Le groupe prive qui derape",
+      title: "Le groupe privé qui dérape",
       slug: "groupe-prive-derape",
       theme: "insultes",
-      summary: "Un groupe ferme devient un espace de moqueries et d insultes ciblees.",
-      content: buildLongStoryContent({
-        hero: "Ines",
-        setting: "une bande de collegiens qui cree un groupe pour partager des memes",
-        trigger: "des moqueries deviennent des attaques personnelles contre un eleve absent",
-        firstSignal: "les messages passent de blagues a des insultes repetees et captures d ecran",
-        escalation: "Ines recoit des pressions pour participer sinon elle serait la prochaine cible",
-        turningPoint: "quand un montage humiliant est partage en dehors du groupe et vu par la famille de la victime",
-        safeActions: "Ines quitte le groupe, garde les preuves, signale les messages et refuse d alimenter la violence",
-        supportNetwork: "elle alerte une adulte de confiance et la conseillere principale d education",
-        conclusion: "Ines choisit des espaces ou l humour n est pas une excuse pour blesser."
-      }),
-      whatHappens: "Le huis clos numerique peut banaliser des violences qui ont des effets reels.",
-      howToProtect: "Ne pas relayer, sortir du groupe, signaler et accompagner la personne visee.",
-      whoToTell: "CPE, infirmiere scolaire, parent ou educateur.",
+      summary: "Un groupe de mèmes devient un espace de moqueries ciblées. Une capture sort. La mère de la victime appelle l'établissement.",
+      content: STORIES_CONTENT.groupePrive,
+      whatHappens: "Les groupes privés peuvent basculer rapidement des blagues vers des attaques personnelles. Les captures sortent du groupe. Ce qui semble limité à un espace fermé peut se retrouver devant des parents ou des professeurs en quelques heures.",
+      howToProtect: "Ne pas relayer des contenus qui ciblent quelqu'un. Quitter un groupe qui devient violent. Garder des captures si des menaces sont envoyées. Signaler dès que le contenu sort du groupe.",
+      whoToTell: "Le CPE, l'infirmière scolaire, un parent ou un éducateur. Ne pas attendre que la situation s'aggrave.",
       status: "published",
       publishedAt: new Date(),
       ageBandId: byCode["12_14"],
@@ -284,21 +596,11 @@ async function seedStories(ageBands, adminId) {
       title: "La capture qui revient avant le stage",
       slug: "capture-revient-avant-stage",
       theme: "image",
-      summary: "Une ancienne capture revient au mauvais moment, juste avant une candidature de stage.",
-      content: buildLongStoryContent({
-        hero: "Sara",
-        setting: "une terminale qui prepare son stage et sa premiere candidature",
-        trigger: "une ancienne capture de conversation privee ressort dans un groupe local",
-        firstSignal: "des personnes qu elle ne connait pas commentent le contenu hors contexte",
-        escalation: "la capture est partagee avec des montages qui deformement ses propos",
-        turningPoint: "quand un recruteur potentiel lui pose une question basee sur ce contenu detourne",
-        safeActions: "Sara rassemble les preuves, demande les suppressions, ajuste ses comptes et prepare une explication factuelle",
-        supportNetwork: "elle sollicite son professeur referent, sa famille et un professionnel du droit numerique",
-        conclusion: "Sara reprend le controle de son image en ligne et avance avec une strategie claire."
-      }),
-      whatHappens: "Une trace ancienne peut reapparaitre et impacter un projet scolaire ou professionnel.",
-      howToProtect: "Surveiller ses traces, repondre avec faits, signaler vite et activer ses protections.",
-      whoToTell: "Professeur referent, parent, conseiller d orientation, adulte de confiance.",
+      summary: "Une conversation capturée à quinze ans ressurgit deux ans plus tard, au moment où Sara postule à son stage de rêve.",
+      content: STORIES_CONTENT.captureStage,
+      whatHappens: "Une trace numérique ancienne peut réapparaître à n'importe quel moment. Des recruteurs, des responsables de stage ou des établissements cherchent parfois le nom des candidats en ligne. Ce qui a été écrit à quinze ans peut avoir un impact à dix-sept.",
+      howToProtect: "Chercher régulièrement son nom sur Google et les plateformes. Vérifier la visibilité des anciens comptes. Supprimer ou rendre privé ce qui ne correspond plus à ce qu'on est. Préparer une explication factuelle en cas de question.",
+      whoToTell: "Un professeur référent, un conseiller d'orientation, un parent. Pour les demandes de suppression, contacter la plateforme directement et, si besoin, la CNIL.",
       status: "published",
       publishedAt: new Date(),
       ageBandId: byCode["15_17"],
@@ -306,24 +608,14 @@ async function seedStories(ageBands, adminId) {
       updatedBy: adminId
     },
     {
-      title: "Le vocal garde pour faire pression",
+      title: "Le vocal gardé pour faire pression",
       slug: "vocal-garde-pour-pression",
       theme: "pression",
-      summary: "Un message vocal prive est conserve et reutilise comme levier de chantage.",
-      content: buildLongStoryContent({
-        hero: "Nassim",
-        setting: "une classe de lycee ou les groupes vocaux tournent en permanence",
-        trigger: "Nassim envoie un vocal de confiance a une personne qu il pensait fiable",
-        firstSignal: "la personne fait allusion au vocal pour obtenir un service qu il refuse",
-        escalation: "le message devient une menace: accepter une demande ou voir le vocal diffuse",
-        turningPoint: "quand la menace est ecrite noir sur blanc avec delai impose",
-        safeActions: "Nassim ne cede pas, sauvegarde les preuves, bloque les comptes, signale et modifie ses parametres",
-        supportNetwork: "il parle a sa soeur, a son professeur principal et a un educateur de prevention",
-        conclusion: "Nassim comprend qu un chantage perd de sa force des qu il est expose aux bonnes personnes."
-      }),
-      whatHappens: "Le chantage cherche l isolement; la transparence avec un adulte casse ce mecanisme.",
-      howToProtect: "Ne pas payer ni ceder, documenter la menace, signaler et se faire accompagner.",
-      whoToTell: "Famille, equipe educative, adulte ressource, dispositifs d aide numerique.",
+      summary: "Nassim envoie un vocal de confiance à un ami. Deux mois plus tard, cet ami s'en sert comme menace.",
+      content: STORIES_CONTENT.vocalPression,
+      whatHappens: "Le chantage numérique consiste à menacer de diffuser un contenu privé pour obtenir quelque chose. Il mise sur la honte et l'isolement. Céder une fois ne règle rien — ça renforce le levier. Signaler rapidement coupe le mécanisme.",
+      howToProtect: "Ne pas céder. Faire des captures de chaque message de menace. Bloquer le contact. Parler immédiatement à un adulte de confiance. Contacter le 3018 (numéro national gratuit, disponible 24h/24).",
+      whoToTell: "Un membre de la famille, un éducateur, le 3018. Signaler sur Cybermalveillance.gouv.fr et la plateforme Pharos.",
       status: "published",
       publishedAt: new Date(),
       ageBandId: byCode["15_17"],
@@ -334,21 +626,11 @@ async function seedStories(ageBands, adminId) {
       title: "Le compte esport compromis",
       slug: "compte-esport-compromis",
       theme: "securite-compte",
-      summary: "Un compte de jeu tres investi est pirate apres reutilisation d un ancien mot de passe.",
-      content: buildLongStoryContent({
-        hero: "Rayan",
-        setting: "un lyceen passionne d esport qui prepare des tournois en ligne",
-        trigger: "un ancien mot de passe leak permet l acces non autorise a son compte principal",
-        firstSignal: "des connexions inhabituelles apparaissent a des horaires impossibles",
-        escalation: "les attaquants changent l email de recuperation et tentent de vendre le compte",
-        turningPoint: "quand Rayan constate que ses messages prives sont aussi utilises pour pieger ses amis",
-        safeActions: "Il active la double authentification, change tous ses mots de passe et coupe les sessions ouvertes",
-        supportNetwork: "il agit avec son pere, un ami technicien et le support officiel de la plateforme",
-        conclusion: "Rayan reprend son compte et adopte une hygiene numerique solide pour la suite."
-      }),
-      whatHappens: "La reutilisation de mot de passe expose plusieurs comptes en cascade.",
-      howToProtect: "Mots de passe uniques, double authentification, verification des sessions actives.",
-      whoToTell: "Parent, adulte technique de confiance, support officiel de la plateforme.",
+      summary: "Le compte de jeu de Rayan, construit en quatre ans, est piraté en quelques secondes à cause d'un mot de passe réutilisé depuis la cinquième.",
+      content: STORIES_CONTENT.compteEsport,
+      whatHappens: "Réutiliser le même mot de passe sur plusieurs plateformes crée un effet domino. Si l'une d'elles est piratée et ses données vendues, tous les comptes avec le même mot de passe sont vulnérables. Des millions d'adresses e-mail et de mots de passe circulent sur des forums après chaque fuite.",
+      howToProtect: "Un mot de passe unique par compte, généré par un gestionnaire de mots de passe. Double vérification activée sur les comptes importants. Vérifier régulièrement ses adresses e-mail sur HaveIBeenPwned.com pour savoir si elles ont été compromises.",
+      whoToTell: "Un parent, un adulte de confiance avec des connaissances techniques, le support officiel de la plateforme. Ne jamais passer par des sites tiers pour récupérer un compte.",
       status: "published",
       publishedAt: new Date(),
       ageBandId: byCode["15_17"],
@@ -664,7 +946,7 @@ async function run() {
   await seedTutorials(ageBands, admin.id);
   await seedCardQuestions(ageBands);
 
-  console.log("Seed termine ✅");
+  console.log("Seed terminé ✅");
   process.exit(0);
 }
 

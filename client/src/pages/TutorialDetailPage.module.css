@@ -1,0 +1,94 @@
+.wrapper {
+  display: grid;
+  gap: 0.9rem;
+}
+
+.header {
+  border: 1px solid var(--border);
+  border-radius: 12px;
+  padding: 0.9rem;
+  background: linear-gradient(145deg, color-mix(in srgb, var(--card) 72%, #dff3ff), var(--card));
+}
+
+.metaRow {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 0.45rem;
+  margin-top: 0.55rem;
+}
+
+.pill {
+  border: 1px solid #a9cee7;
+  border-radius: 999px;
+  background: #ecf7ff;
+  padding: 0.2rem 0.55rem;
+  font-size: 0.82rem;
+  font-weight: 700;
+}
+
+.layout {
+  display: grid;
+  grid-template-columns: 1.35fr 0.9fr;
+  gap: 0.75rem;
+}
+
+.block {
+  border: 1px solid var(--border);
+  border-radius: 12px;
+  padding: 0.85rem;
+  background: var(--card);
+}
+
+.block h3 {
+  margin-top: 0;
+}
+
+.content {
+  white-space: pre-line;
+  line-height: 1.65;
+}
+
+.quickList {
+  margin: 0;
+  padding-left: 1.1rem;
+  display: grid;
+  gap: 0.35rem;
+}
+
+.checklist {
+  display: grid;
+  gap: 0.45rem;
+}
+
+.checkItem {
+  display: flex;
+  align-items: center;
+  gap: 0.45rem;
+  border: 1px solid var(--border);
+  border-radius: 10px;
+  padding: 0.45rem;
+  background: color-mix(in srgb, var(--card) 82%, #eaf7ff);
+}
+
+.checkItem input {
+  width: 18px;
+  height: 18px;
+  margin: 0;
+}
+
+.challenge {
+  border: 1px solid #e8c891;
+  border-radius: 12px;
+  padding: 0.75rem;
+  background: #fff7e8;
+}
+
+.challenge p {
+  margin: 0.35rem 0 0;
+}
+
+@media (max-width: 920px) {
+  .layout {
+    grid-template-columns: 1fr;
+  }
+}

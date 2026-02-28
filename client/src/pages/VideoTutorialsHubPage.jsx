@@ -23,7 +23,7 @@ function PortraitVideo({ src, title, children }) {
           style={{ width: "100%", height: "100%", display: "block", objectFit: "contain" }}
         >
           <source src={src} type="video/mp4" />
-          Votre navigateur ne prend pas en charge la lecture video.
+          Votre navigateur ne prend pas en charge la lecture vidéo.
         </video>
       </div>
       <div style={{ marginTop: "0.8rem" }}>{children}</div>
@@ -73,44 +73,44 @@ export function VideoTutorialsHubPage() {
     <article className="card">
       <h2>Espace tutos video</h2>
       <p>
-        Retrouve tous les tutos video de protection numerique au meme endroit, classes
-        par themes.
+        Retrouve tous les tutoriels vidéo de protection numérique au même endroit, classés
+        par thèmes.
       </p>
 
       <div className="grid" style={{ marginTop: "0.75rem" }}>
         <ThemeSection
-          title="Theme 1: Cyberharcelement"
-          description="Reagir vite, garder des preuves, et demander de l aide."
+          title="Thème 1: Cyberharcèlement"
+          description="Réagir vite, garder des preuves et demander de l'aide."
           isOpen={openTheme === "cyber"}
           onToggle={() => toggleTheme("cyber")}
         >
           <PortraitVideo
             src="/videos/cyberharcelement-comment-reagir-720p.mp4"
-            title="Cyberharcelement: comment reagir ?"
+            title="Cyberharcèlement: comment réagir ?"
           >
             <ul>
-              <li>Ne reponds pas sous la colere.</li>
-              <li>Fais des captures d ecran (preuves).</li>
-              <li>Bloque, signale et parle a un adulte de confiance.</li>
+              <li>Ne réponds pas sous la colère.</li>
+              <li>Fais des captures d'écran (preuves).</li>
+              <li>Bloque, signale et parle à un adulte de confiance.</li>
             </ul>
           </PortraitVideo>
         </ThemeSection>
 
         <ThemeSection
-          title="Theme 2: Securite des comptes"
-          description="4 etapes pour reduire les risques de piratage."
+          title="Thème 2: Sécurité des comptes"
+          description="4 étapes pour réduire les risques de piratage."
           isOpen={openTheme === "securite"}
           onToggle={() => toggleTheme("securite")}
         >
           <PortraitVideo
             src="/videos/securise-ton-compte-4-etapes-720p.mp4"
-            title="Securise ton compte en 4 etapes"
+            title="Sécurise ton compte en 4 étapes"
           >
             <ol>
               <li>Mot de passe long et unique.</li>
-              <li>Double authentification activee.</li>
-              <li>Reglages de confidentialite verifies.</li>
-              <li>Sessions inconnues supprimees.</li>
+              <li>Double authentification activée.</li>
+              <li>Réglages de confidentialité vérifiés.</li>
+              <li>Sessions inconnues supprimées.</li>
             </ol>
           </PortraitVideo>
         </ThemeSection>
