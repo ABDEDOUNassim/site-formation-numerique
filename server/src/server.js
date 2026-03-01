@@ -4,6 +4,10 @@ import { sequelize } from "./models/index.js";
 
 async function startServer() {
   await sequelize.authenticate();
+  if (env.nodeEnv === "production" && env.dbSyncOnStartup) {
+    throw new Error("DB_SYNC_ON_STARTUP must be false in production. Use migrations instead.");
+  }
+
   if (env.dbSyncOnStartup) {
     await sequelize.sync();
     console.log("DB sync on startup: enabled");

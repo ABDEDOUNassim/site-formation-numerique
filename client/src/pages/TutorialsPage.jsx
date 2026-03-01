@@ -101,10 +101,10 @@ export function TutorialsPage() {
 
       <div className={styles.hero}>
         <div className={styles.heroMain}>
-          <h3>Parcours fun et concret</h3>
+          <h3>🎮 Jeux quiz de protection</h3>
           <p>
-            Choisis ta tranche d'âge, valide des mini-objectifs, puis applique les bons réflexes
-            dans ta vraie vie numérique.
+            Choisis ta tranche d'âge, réponds aux scénarios, apprends les bons réflexes en jouant.
+            Valide les tutos maîtrisés et bats ton score !
           </p>
         </div>
 
@@ -179,7 +179,7 @@ export function TutorialsPage() {
             Commence par: <strong>{missionTutorial.title}</strong>
           </p>
           <Link className={styles.cardLink} to={`/jeunes/tutorials/${missionTutorial.id}`}>
-            Lancer cette mission
+            🎮 Jouer maintenant
           </Link>
         </article>
       )}
@@ -204,7 +204,7 @@ export function TutorialsPage() {
               </Link>
 
               <p className={styles.meta}>
-                Format: fiche pratique courte • objectif: autonomie numérique
+                🎮 Jeu quiz interactif • 3-5 questions • ~2 min
               </p>
 
               <div className={styles.actionRow}>
@@ -217,7 +217,7 @@ export function TutorialsPage() {
                 </button>
 
                 <Link className={styles.cardLink} to={`/jeunes/tutorials/${tutorial.id}`}>
-                  Ouvrir
+                  Jouer →
                 </Link>
               </div>
             </article>

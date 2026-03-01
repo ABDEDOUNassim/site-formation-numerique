@@ -1,6 +1,7 @@
 :root {
   --bg: #f6fbff;
   --bg-soft: #e8f6ff;
+  --fg: #162031;
   --text: #162031;
   --primary: #0f8b8d;
   --secondary: #ff9f1c;
@@ -12,11 +13,35 @@
   --input-bg: #ffffff;
   --input-text: #162031;
   --muted: #3e5f7d;
+
+  /* Semantic tokens */
+  --pill-bg: #e8f6ff;
+  --pill-border: #c0def1;
+  --badge-bg: #eef8ff;
+  --badge-border: #add0e7;
+  --level-bg: #fff5e2;
+  --level-border: #f0cc8d;
+  --highlight-bg: #fff8e6;
+  --highlight-border: #f0d08a;
+  --image-border: #cfe4f4;
+  --link-color: #0c6fa8;
+
+  /* Feedback */
+  --success-bg: #e8f8ef;
+  --success-border: #7abf9a;
+  --success-text: #0f6b3f;
+  --error-bg: #fdf0f0;
+  --error-border: #e7a9a9;
+  --error-text: #7a1f1f;
+  --done-bg: #e8f8ef;
+  --done-border: #7abf9a;
+  --done-text: #0f6b3f;
 }
 
 :root[data-theme="dark"] {
   --bg: #0b1320;
   --bg-soft: #111b2c;
+  --fg: #e6efff;
   --text: #e6efff;
   --primary: #2ec4c7;
   --secondary: #ffbf69;
@@ -28,6 +53,29 @@
   --input-bg: #0e1827;
   --input-text: #e6efff;
   --muted: #9fb4d1;
+
+  /* Semantic tokens — dark */
+  --pill-bg: #0e1f33;
+  --pill-border: #233956;
+  --badge-bg: #0e1f33;
+  --badge-border: #2c4a6b;
+  --level-bg: #1e1a0d;
+  --level-border: #3d3015;
+  --highlight-bg: #1e1a0d;
+  --highlight-border: #3d3015;
+  --image-border: #233956;
+  --link-color: #5bbde8;
+
+  /* Feedback — dark */
+  --success-bg: #0d2a1c;
+  --success-border: #2a6e45;
+  --success-text: #6ee8a5;
+  --error-bg: #2a0e0e;
+  --error-border: #7a3535;
+  --error-text: #ffaaaa;
+  --done-bg: #0d2a1c;
+  --done-border: #2a6e45;
+  --done-text: #6ee8a5;
 }
 
 * {
@@ -84,8 +132,8 @@ button {
 .heroImage {
   width: 100%;
   border-radius: 14px;
-  border: 1px solid #cfe4f4;
-  background: #fff;
+  border: 1px solid var(--image-border);
+  background: var(--card);
   height: auto;
   display: block;
 }
@@ -99,16 +147,16 @@ button {
 .pill {
   padding: 0.35rem 0.65rem;
   border-radius: 999px;
-  background: #e8f6ff;
-  border: 1px solid #c0def1;
+  background: var(--pill-bg);
+  border: 1px solid var(--pill-border);
   font-size: 0.9rem;
 }
 
 .highlight {
   padding: 0.8rem;
   border-radius: 10px;
-  background: #fff8e6;
-  border: 1px solid #f0d08a;
+  background: var(--highlight-bg);
+  border: 1px solid var(--highlight-border);
 }
 
 .grid {

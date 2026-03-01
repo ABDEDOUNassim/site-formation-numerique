@@ -1,0 +1,43 @@
+services:
+  - type: web
+    name: numerique-responsable-api
+    env: node
+    rootDir: server
+    plan: free
+    buildCommand: npm ci
+    startCommand: npm run migrate && npm start
+    healthCheckPath: /health
+    envVars:
+      - key: NODE_ENV
+        value: production
+      - key: DB_SYNC_ON_STARTUP
+        value: "false"
+      - key: TRUST_PROXY
+        value: "true"
+      - key: DB_SSL
+        value: auto
+      - key: DB_SSL_REJECT_UNAUTHORIZED
+        value: "false"
+      - key: JWT_EXPIRES_IN
+        value: 7d
+      # A definir dans Render dashboard (secrets):
+      # DATABASE_URL
+      # JWT_SECRET
+      # FRONTEND_URLS
+      # ADMIN_SEED_EMAIL
+      # ADMIN_SEED_PASSWORD
+
+  - type: web
+    name: numerique-responsable-client
+    env: static
+    rootDir: client
+    plan: free
+    buildCommand: npm ci && npm run build
+    staticPublishPath: dist
+    envVars:
+      - key: VITE_API_URL
+        value: https://numerique-responsable-api.onrender.com/api
+    routes:
+      - type: rewrite
+        source: /*
+        destination: /index.html

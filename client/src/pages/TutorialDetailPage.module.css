@@ -1,94 +1,265 @@
 .wrapper {
   display: grid;
-  gap: 0.9rem;
+  gap: 1rem;
+  max-width: 680px;
+  margin: 0 auto;
 }
 
-.header {
-  border: 1px solid var(--border);
-  border-radius: 12px;
-  padding: 0.9rem;
-  background: linear-gradient(145deg, color-mix(in srgb, var(--card) 72%, #dff3ff), var(--card));
-}
-
-.metaRow {
+.topBar {
   display: flex;
-  flex-wrap: wrap;
-  gap: 0.45rem;
-  margin-top: 0.55rem;
+  align-items: center;
+  justify-content: space-between;
+  gap: 0.5rem;
 }
 
-.pill {
-  border: 1px solid #a9cee7;
+.backLink {
+  font-weight: 700;
+  font-size: 0.9rem;
+  color: var(--muted);
+  text-decoration: none;
+}
+.backLink:hover { color: var(--fg); }
+
+.masteredBadge {
+  background: var(--done-bg);
+  border: 1px solid var(--done-border);
+  color: var(--done-text);
   border-radius: 999px;
-  background: #ecf7ff;
-  padding: 0.2rem 0.55rem;
+  padding: 0.2rem 0.65rem;
   font-size: 0.82rem;
   font-weight: 700;
 }
 
-.layout {
-  display: grid;
-  grid-template-columns: 1.35fr 0.9fr;
-  gap: 0.75rem;
-}
-
-.block {
+/* ── Game card ── */
+.gameCard {
   border: 1px solid var(--border);
-  border-radius: 12px;
-  padding: 0.85rem;
+  border-radius: 16px;
+  padding: 1.75rem 1.5rem;
   background: var(--card);
+  display: grid;
+  gap: 1rem;
+  text-align: center;
 }
 
-.block h3 {
-  margin-top: 0;
+.gameIntroEmoji {
+  font-size: 3rem;
+  line-height: 1;
 }
 
-.content {
-  white-space: pre-line;
-  line-height: 1.65;
-}
-
-.quickList {
+.gameTitle {
   margin: 0;
-  padding-left: 1.1rem;
-  display: grid;
-  gap: 0.35rem;
+  font-size: 1.25rem;
+  line-height: 1.4;
+  color: var(--fg);
 }
 
-.checklist {
-  display: grid;
+.gameSubtitle {
+  margin: 0;
+  color: var(--muted);
+  font-size: 0.92rem;
+}
+
+.gameOutro {
+  margin: 0;
+  color: var(--muted);
+  font-size: 0.9rem;
+  font-style: italic;
+}
+
+/* ── Progress dots ── */
+.progressRow {
+  display: flex;
+  justify-content: center;
   gap: 0.45rem;
 }
 
-.checkItem {
+.progressDot {
+  width: 10px;
+  height: 10px;
+  border-radius: 50%;
+  background: var(--border);
+  transition: background 0.2s;
+}
+
+.progressDotDone { background: var(--success-border); }
+.progressDotCurrent { background: var(--primary); }
+
+/* ── Question ── */
+.questionCounter {
+  margin: 0;
+  font-size: 0.8rem;
+  color: var(--muted);
+  text-transform: uppercase;
+  letter-spacing: 0.04em;
+}
+
+.questionText {
+  margin: 0;
+  font-size: 1.1rem;
+  line-height: 1.5;
+  text-align: left;
+  color: var(--fg);
+}
+
+/* ── Options ── */
+.optionsList {
+  display: grid;
+  gap: 0.55rem;
+  text-align: left;
+}
+
+.optionBtn {
   display: flex;
   align-items: center;
-  gap: 0.45rem;
-  border: 1px solid var(--border);
-  border-radius: 10px;
-  padding: 0.45rem;
-  background: color-mix(in srgb, var(--card) 82%, #eaf7ff);
-}
-
-.checkItem input {
-  width: 18px;
-  height: 18px;
-  margin: 0;
-}
-
-.challenge {
-  border: 1px solid #e8c891;
+  gap: 0.75rem;
+  border: 2px solid var(--border);
   border-radius: 12px;
-  padding: 0.75rem;
-  background: #fff7e8;
+  padding: 0.65rem 0.85rem;
+  background: var(--card);
+  color: var(--fg);
+  font-size: 0.95rem;
+  font-weight: 600;
+  cursor: pointer;
+  text-align: left;
+  transition: border-color 0.15s, background 0.15s;
+}
+.optionBtn:not(:disabled):hover {
+  border-color: var(--primary);
+  background: color-mix(in srgb, var(--card) 70%, var(--bg-soft));
 }
 
-.challenge p {
-  margin: 0.35rem 0 0;
+.optionLetter {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  min-width: 28px;
+  height: 28px;
+  border-radius: 50%;
+  background: color-mix(in srgb, var(--border) 60%, transparent);
+  font-size: 0.8rem;
+  font-weight: 800;
 }
 
-@media (max-width: 920px) {
-  .layout {
-    grid-template-columns: 1fr;
-  }
+.optionCorrect {
+  border-color: var(--success-border);
+  background: var(--success-bg);
+  color: var(--success-text);
 }
+.optionCorrect .optionLetter {
+  background: var(--success-border);
+  color: var(--card);
+}
+
+.optionWrong {
+  border-color: var(--error-border);
+  background: var(--error-bg);
+  color: var(--error-text);
+}
+.optionWrong .optionLetter {
+  background: var(--error-border);
+  color: var(--card);
+}
+
+.optionFaded {
+  opacity: 0.4;
+}
+
+/* ── Feedback ── */
+.feedback {
+  border-radius: 12px;
+  padding: 0.75rem 1rem;
+  text-align: left;
+  font-size: 0.92rem;
+}
+
+.feedback span {
+  display: block;
+  font-weight: 700;
+  margin-bottom: 0.3rem;
+}
+
+.feedback p {
+  margin: 0;
+  line-height: 1.5;
+}
+
+.feedbackGood {
+  background: var(--success-bg);
+  border: 1px solid var(--success-border);
+  color: var(--success-text);
+}
+
+.feedbackBad {
+  background: var(--error-bg);
+  border: 1px solid var(--error-border);
+  color: var(--error-text);
+}
+
+/* ── Score ── */
+.scoreBar {
+  height: 10px;
+  background: var(--border);
+  border-radius: 999px;
+  overflow: hidden;
+}
+
+.scoreBarFill {
+  height: 100%;
+  background: linear-gradient(90deg, var(--success-border), var(--primary));
+  border-radius: 999px;
+  transition: width 0.6s ease;
+}
+
+.scoreText {
+  margin: 0;
+  font-size: 1.1rem;
+  font-weight: 800;
+  color: var(--fg);
+}
+
+.resultActions {
+  display: flex;
+  justify-content: center;
+  gap: 0.75rem;
+  flex-wrap: wrap;
+}
+
+/* ── Buttons ── */
+.btnPrimary {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  padding: 0.6rem 1.3rem;
+  border-radius: 999px;
+  background: var(--primary);
+  color: #fff;
+  font-weight: 700;
+  font-size: 0.95rem;
+  border: none;
+  cursor: pointer;
+  text-decoration: none;
+  transition: opacity 0.15s;
+}
+.btnPrimary:hover { opacity: 0.88; }
+
+.btnSecondary {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  padding: 0.6rem 1.3rem;
+  border-radius: 999px;
+  background: transparent;
+  color: var(--fg);
+  font-weight: 700;
+  font-size: 0.95rem;
+  border: 2px solid var(--border);
+  cursor: pointer;
+  transition: border-color 0.15s;
+}
+.btnSecondary:hover { border-color: var(--primary); }
+
+/* ── Fallback plain text ── */
+.header { border-bottom: 1px solid var(--border); padding-bottom: 0.75rem; }
+.header h2 { margin: 0; color: var(--fg); }
+.block { border: 1px solid var(--border); border-radius: 12px; padding: 0.9rem; }
+.content { white-space: pre-line; line-height: 1.65; margin: 0; color: var(--fg); }
